@@ -39,7 +39,9 @@ public unsafe class MarketEnhancements : UiAdjustments.SubTweak {
 
     private delegate void* ListSetup(void* a1, AtkUnitBase* a2, nint a3);
 
-    [TweakHook, Signature("E8 ?? ?? ?? ?? 41 B1 08", DetourName = nameof(ListSetupDetour))]
+    // 原特徵碼「E8 ?? ?? ?? ?? 41 B1 08」在台服有 20 個呼叫點、目標不只一個，靠「取第一筆」才碰巧對；
+    // 改成直接比對同一個目標函式的完整本體（台服唯一命中），對不上就讓本 tweak 啟用失敗而不是 hook 到別的函式。
+    [TweakHook, Signature("48 89 11 48 8B C1 4C 89 41 08 48 C7 41 10 00 00 00 00 C3", DetourName = nameof(ListSetupDetour))]
     private HookWrapper<ListSetup> addonSetupHook;
 
     private UpdateResultDelegate replacementUpdateResultDelegate;

@@ -41,8 +41,15 @@ public unsafe class SimpleEvent : IDisposable {
     private delegate void* GlobalEventDelegate(AtkUnitBase* atkUnitBase, AtkEventType eventType, uint eventParam, AtkResNode** eventData, uint* a5);
     private static readonly HookWrapper<GlobalEventDelegate> GlobalEventHook;
     
+    // 靜態建構子擲例外＝型別永久不可用（連插件 Dispose 呼叫 Destroy 都會擲），所以對不上只記錄、hook 留 null。
     static SimpleEvent() {
-        GlobalEventHook = Common.Hook<GlobalEventDelegate>("48 89 5C 24 ?? 55 57 41 57 48 83 EC 50 48 8B D9 0F B7 EA", GlobalEventDetour);
+        const string signature = "48 89 5C 24 ?? 55 57 41 57 48 83 EC 50 48 8B D9 0F B7 EA";
+        if (!Service.SigScanner.TryScanText(signature, out _)) {
+            SimpleLog.Error("找不到全域 UI 事件處理函式，SimpleEvent 相依功能停用。");
+            return;
+        }
+
+        GlobalEventHook = Common.Hook<GlobalEventDelegate>(signature, GlobalEventDetour);
         GlobalEventHook?.Enable();
     }
     

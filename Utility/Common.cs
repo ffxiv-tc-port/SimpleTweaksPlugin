@@ -58,12 +58,22 @@ public unsafe class Common {
 
     public static void* ThrowawayOut { get; private set; } = (void*)Marshal.AllocHGlobal(1024);
 
+    // 位址對不上只停用相依功能：這裡擲例外會讓 Initialize 中斷、整個插件一個 tweak 都載不到。
     public static void Setup() {
-        LastCommandAddress = Service.SigScanner.GetStaticAddressFromSig("4C 8D 05 ?? ?? ?? ?? 49 8B D4 48 8B C8 E8 ?? ?? ?? ?? 83 EB 06");
-        LastCommand = (Utf8String*)(LastCommandAddress);
+        if (Service.SigScanner.TryGetStaticAddressFromSig("4C 8D 05 ?? ?? ?? ?? 49 8B D4 48 8B C8 E8 ?? ?? ?? ?? 83 EB 06", out LastCommandAddress)) {
+            LastCommand = (Utf8String*)(LastCommandAddress);
+        } else {
+            LastCommand = null;
+            SimpleLog.Error("找不到「最後輸入的指令」位址，Fix '/target' 停用。");
+        }
 
-        updateCursorHook = Hook<AtkModuleUpdateCursor>("48 89 74 24 ?? 48 89 7C 24 ?? 41 56 48 83 EC 20 4C 8B F1 E8 ?? ?? ?? ?? 49 8B CE", UpdateCursorDetour);
-        updateCursorHook?.Enable();
+        const string updateCursorSignature = "48 89 74 24 ?? 48 89 7C 24 ?? 41 56 48 83 EC 20 4C 8B F1 E8 ?? ?? ?? ?? 49 8B CE";
+        if (Service.SigScanner.TryScanText(updateCursorSignature, out _)) {
+            updateCursorHook = Hook<AtkModuleUpdateCursor>(updateCursorSignature, UpdateCursorDetour);
+            updateCursorHook?.Enable();
+        } else {
+            SimpleLog.Error("找不到 AtkModule.UpdateCursor，游標相關功能停用。");
+        }
     }
 
     public static UIModule* UIModule => Framework.Instance()->GetUIModule();

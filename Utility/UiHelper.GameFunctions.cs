@@ -13,7 +13,13 @@ public unsafe partial class UiHelper {
     public static bool Ready;
 
     public static void Setup(ISigScanner scanner) {
-        _atkUnitBaseClose = Marshal.GetDelegateForFunctionPointer<AtkUnitBaseClose>(scanner.ScanText("40 53 48 83 EC 50 81 A1"));
+        // 對不上時 Ready 維持 false（Close 變成不做事），不擲例外中斷插件初始化。
+        if (!scanner.TryScanText("40 53 48 83 EC 50 81 A1", out var closeAddress)) {
+            SimpleLog.Error("找不到 AtkUnitBase.Close，關閉視窗相關功能停用。");
+            return;
+        }
+
+        _atkUnitBaseClose = Marshal.GetDelegateForFunctionPointer<AtkUnitBaseClose>(closeAddress);
         Ready = true;
     }
 
