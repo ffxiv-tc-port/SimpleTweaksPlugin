@@ -49,6 +49,9 @@
         </None>
     </ItemGroup>
     <ItemGroup>
+      <EmbeddedResource Include="tweakBlacklist.txt" LogicalName="SimpleTweaksPlugin.tweakBlacklist.txt" />
+    </ItemGroup>
+    <ItemGroup>
       <PackageReference Include="System.Numerics.Vectors" Version="4.6.0" />
       <PackageReference Include="DalamudPackager" Version="13.0.0" />
     </ItemGroup>

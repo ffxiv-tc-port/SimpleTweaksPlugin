@@ -125,16 +125,14 @@ namespace SimpleTweaksPlugin {
 #endif
 
 
+        // 黑名單改讀隨插件出貨的 tweakBlacklist.txt（內嵌資源），不再每次載入向原作者 repo 下載：
+        // 停用清單只隨我們發的版本改變；讀不到時保留設定檔裡現有的清單（與原本下載失敗時相同）。
         private void UpdateBlacklist() {
             try {
-                // Update Tweak Blacklist
-                var httpClient = Common.HttpClient;
-                var response = httpClient.Send(new HttpRequestMessage(HttpMethod.Get, "https://raw.githubusercontent.com/Caraxi/SimpleTweaksPlugin/main/tweakBlacklist.txt"));
-                if (response.StatusCode != HttpStatusCode.OK) return;
-                var asStringTask = response.Content.ReadAsStringAsync();
-                asStringTask.Wait();
-                if (!asStringTask.IsCompletedSuccessfully) return;
-                var blacklistedTweaksString = asStringTask.Result;
+                using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("SimpleTweaksPlugin.tweakBlacklist.txt");
+                if (stream == null) return;
+                using var reader = new StreamReader(stream);
+                var blacklistedTweaksString = reader.ReadToEnd();
                 SimpleLog.Log("Tweak Blacklist:\n" + blacklistedTweaksString);
                 var blacklistedTweaks = new List<string>();
                 foreach (var l in blacklistedTweaksString.Split("\n")) {
@@ -185,8 +183,6 @@ namespace SimpleTweaksPlugin {
 
 
             Service.Framework.Update += FrameworkOnUpdate;
-            
-            MetricsService.ReportMetrics();
 
             TestUtil.Ready();
         }
