@@ -25,6 +25,8 @@ public class FixTarget : Tweak {
             ClientLanguage.German => new Regex(@"^Der Unterbefehl \[Name des Ziels\] an der \d+\. Stelle des Textkommandos \((.+)\) ist fehlerhaft\.$"),
             ClientLanguage.French => new Regex(@"^Le \d+er? argument “nom de la cible” est incorrect \((.*?)\)\.$"),
             ClientLanguage.English => new Regex(@"^“(.+)” is not a valid target name\.$"),
+            // 台服訊息不帶名字（例：「/target」出現問題：1號指定的目標名不存在。），沒有擷取群組＝改取指令參數。
+            ClientLanguage.TraditionalChinese => new Regex(@"^「.+?」出現問題：\d+號指定的目標名不存在。$"),
             _ => null
         };
 
@@ -51,9 +53,11 @@ public class FixTarget : Tweak {
             return;
         }
 
+        if (regex == null) return;
         var match = regex.Match(message.TextValue);
         if (!match.Success) return;
-        var searchName = match.Groups[1].Value.ToLowerInvariant();
+        var searchName = (match.Groups[1].Success ? match.Groups[1].Value : CommandArgument(lastCommandStr)).ToLowerInvariant();
+        if (string.IsNullOrWhiteSpace(searchName)) return;
 
         IGameObject closestMatch = null;
         var closestDistance = float.MaxValue;
@@ -78,5 +82,11 @@ public class FixTarget : Tweak {
         isHandled = true;
         
         Service.Targets.Target = closestMatch;
+    }
+
+    private static string CommandArgument(string command) {
+        var space = command.IndexOf(' ');
+        if (space < 0) return string.Empty;
+        return command[(space + 1)..].Trim().Trim('"', '“', '”', '「', '」').Trim();
     }
 }

@@ -23,6 +23,7 @@ public unsafe class AutoOpenLootWindow : Tweak {
                     ClientLanguage.German => "Bitte um das Beutegut würfeln.",
                     ClientLanguage.French => "Veuillez lancer les dés pour le butin.",
                     ClientLanguage.Japanese => "ロットを行ってください。",
+                    ClientLanguage.TraditionalChinese => "請擲骰。",
                     _ => "Cast your lot."
                 }) {
                 if (Service.Condition.Cutscene()) {
