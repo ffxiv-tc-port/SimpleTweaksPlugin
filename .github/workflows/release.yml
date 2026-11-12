@@ -123,3 +123,4 @@ jobs:
             SimpleTweaksPlugin.zip
             bin/Release/SimpleTweaksPlugin/SimpleTweaksPlugin.json
           generate_release_notes: true
+# workflow re-registration trigger 2026-11-12T03:42:10Z
