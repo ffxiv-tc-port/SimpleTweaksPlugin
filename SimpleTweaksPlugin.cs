@@ -196,16 +196,20 @@ namespace SimpleTweaksPlugin {
                 ClientLanguage.French => "fr",
                 ClientLanguage.German => "de",
                 ClientLanguage.Japanese => "ja",
+                ClientLanguage.TraditionalChinese => Loc.BuiltInLanguage,
                 _ => "en"
             };
 
             Loc.LoadLanguage(PluginConfig.Language);
+            var configTitle = Loc.T("Simple Tweaks Config");
+            ConfigWindow.WindowName = configTitle == "Simple Tweaks Config" ? configTitle : $"{configTitle}###SimpleTweaksConfigWindow";
+            ChangelogWindow.UpdateWindowName();
             foreach (var t in Tweaks) t.LanguageChanged();
         }
 
         public void SetupCommands() {
             Service.Commands.AddHandler("/tweaks", new Dalamud.Game.Command.CommandInfo(OnConfigCommandHandler) {
-                HelpMessage = $"Open config window for {this.Name}",
+                HelpMessage = Loc.T("Open config window for {0}", this.Name),
                 ShowInHelp = true
             });
         }
@@ -248,18 +252,18 @@ namespace SimpleTweaksPlugin {
                                         PluginConfig.EnabledTweaks.Remove(tweak.Key);
                                     }
 
-                                    Service.NotificationManager.AddNotification(new Notification { Content = $"Disabled {tweak.Name}", Title = "Simple Tweaks", Type = NotificationType.Info });
+                                    Service.NotificationManager.AddNotification(new Notification { Content = Loc.T("Disabled {0}", tweak.Name), Title = "Simple Tweaks", Type = NotificationType.Info });
                                 } else {
                                     tweak.InternalEnable();
                                     if (!PluginConfig.EnabledTweaks.Contains(tweak.Key)) {
                                         PluginConfig.EnabledTweaks.Add(tweak.Key);
                                     }
-                                    Service.NotificationManager.AddNotification(new Notification { Content = $"Enabled {tweak.Name}", Title = "Simple Tweaks", Type = NotificationType.Info });}
+                                    Service.NotificationManager.AddNotification(new Notification { Content = Loc.T("Enabled {0}", tweak.Name), Title = "Simple Tweaks", Type = NotificationType.Info });}
                                 PluginConfig.Save();
                                 return;
                             }
 
-                            Service.Chat.PrintError($"\"{splitArgString[1]}\" is not a valid tweak id.");
+                            Service.Chat.PrintError(Loc.T("\"{0}\" is not a valid tweak id.", splitArgString[1]));
                             return;
                         }
                         case "e":
@@ -275,13 +279,13 @@ namespace SimpleTweaksPlugin {
                                     if (!PluginConfig.EnabledTweaks.Contains(tweak.Key)) {
                                         PluginConfig.EnabledTweaks.Add(tweak.Key);
                                     }
-                                    Service.NotificationManager.AddNotification(new Notification { Content = $"Enabled {tweak.Name}", Title = "Simple Tweaks", Type = NotificationType.Info });
+                                    Service.NotificationManager.AddNotification(new Notification { Content = Loc.T("Enabled {0}", tweak.Name), Title = "Simple Tweaks", Type = NotificationType.Info });
                                     PluginConfig.Save();
                                 }
                                 return;
                             }
 
-                            Service.Chat.PrintError($"\"{splitArgString[1]}\" is not a valid tweak id.");
+                            Service.Chat.PrintError(Loc.T("\"{0}\" is not a valid tweak id.", splitArgString[1]));
                             return;
                         }
                         case "d":
@@ -297,13 +301,13 @@ namespace SimpleTweaksPlugin {
                                     if (PluginConfig.EnabledTweaks.Contains(tweak.Key)) {
                                         PluginConfig.EnabledTweaks.Remove(tweak.Key);
                                     }
-                                    Service.NotificationManager.AddNotification(new Notification { Content = $"Disabled {tweak.Name}", Title = "Simple Tweaks", Type = NotificationType.Info });
+                                    Service.NotificationManager.AddNotification(new Notification { Content = Loc.T("Disabled {0}", tweak.Name), Title = "Simple Tweaks", Type = NotificationType.Info });
                                     PluginConfig.Save();
                                 }
                                 return;
                             }
 
-                            Service.Chat.PrintError($"\"{splitArgString[1]}\" is not a valid tweak id.");
+                            Service.Chat.PrintError(Loc.T("\"{0}\" is not a valid tweak id.", splitArgString[1]));
                             return;
                         }
                         case "f":
@@ -318,7 +322,7 @@ namespace SimpleTweaksPlugin {
                                 return;
                                 
                             }
-                            Service.Chat.PrintError($"\"{splitArgString[1]}\" is not a valid tweak id.");
+                            Service.Chat.PrintError(Loc.T("\"{0}\" is not a valid tweak id.", splitArgString[1]));
 
                             return;
                         }
@@ -329,7 +333,7 @@ namespace SimpleTweaksPlugin {
                                 return;
                             }
                             
-                            Service.Chat.PrintError($"\"{splitArgString[1]}\" is not a valid tweak id.");
+                            Service.Chat.PrintError(Loc.T("\"{0}\" is not a valid tweak id.", splitArgString[1]));
                             return;
                         }
 
@@ -387,7 +391,7 @@ namespace SimpleTweaksPlugin {
             foreach (var e in ErrorList.Where(e => e.IsNew && e.Tweak != null)) {
                 e.IsNew = false;
                 e.Tweak.InternalDisable();
-                Service.NotificationManager.AddNotification(new Notification { Content = $"{e.Tweak.Name} has been disabled due to an error.", Title = "Simple Tweaks", Type = NotificationType.Error }); 
+                Service.NotificationManager.AddNotification(new Notification { Content = Loc.T("{0} has been disabled due to an error.", e.Tweak.Name), Title = "Simple Tweaks", Type = NotificationType.Error }); 
             }
 
             WindowSystem.Draw();
@@ -395,23 +399,23 @@ namespace SimpleTweaksPlugin {
             if (ShowErrorWindow) {
                 if (ErrorList.Count > 0) {
                     var errorsStillOpen = true;
-                    ImGui.Begin($"{Name}: Error!", ref errorsStillOpen, ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.AlwaysAutoResize);
+                    ImGui.Begin($"{Loc.T("{0}: Error!", Name)}###simpleTweaksErrorWindow", ref errorsStillOpen, ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.AlwaysAutoResize);
 
                     for (var i = 0; i < ErrorList.Count && i < 5; i++) {
                         var e = ErrorList[i];
-                        ImGui.Text($"Error caught in {(e.Manager != null ? $"{e.Manager.Name}@" : "")}{(e.Tweak != null ? e.Tweak.Name : "Tweak Loader")}:");
+                        ImGui.Text(Loc.T("Error caught in {0}:", $"{(e.Manager != null ? $"{e.Manager.Name}@" : "")}{(e.Tweak != null ? e.Tweak.Name : Loc.T("Tweak Loader"))}"));
                         if (!string.IsNullOrEmpty(e.Message)) {
                             ImGui.Text(e.Message);
                         }
                         ImGui.Text($"{e.Exception}");
 
-                        if (ImGui.Button($"Clear this Error###clearErrorButton{i}")) {
+                        if (ImGui.Button($"{Loc.T("Clear this Error")}###clearErrorButton{i}")) {
                             e.Closed = true;
                         }
 
                         if (e.Count > 1) {
                             ImGui.SameLine();
-                            ImGui.Text($"This error has occured {e.Count} times.");
+                            ImGui.Text(Loc.T("This error has occured {0} times.", e.Count));
                         }
 
 

@@ -108,12 +108,12 @@ public unsafe class TrackGachaItems : TooltipTweaks.SubTweak {
         if (fullyObtained) {
             description.Payloads.Add(new NewLinePayload());
             description.Payloads.Add(new UIForegroundPayload(500));
-            description.Payloads.Add(new TextPayload("All Options Obtained"));
+            description.Payloads.Add(new TextPayload(Loc.T("All Options Obtained")));
             description.Payloads.Add(new UIForegroundPayload(0));
         } else {
             description.Payloads.Add(new NewLinePayload());
             description.Payloads.Add(new UIForegroundPayload(500));
-            description.Payloads.Add(new TextPayload($"Obtained: {obtainedCount}/{gachaList.Length}"));
+            description.Payloads.Add(new TextPayload(Loc.T("Obtained: {0}/{1}", obtainedCount, gachaList.Length)));
             description.Payloads.Add(new UIForegroundPayload(0));
         }
 

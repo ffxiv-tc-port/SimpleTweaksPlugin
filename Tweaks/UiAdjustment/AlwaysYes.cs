@@ -45,20 +45,20 @@ public unsafe class AlwaysYes : UiAdjustments.SubTweak {
     private string newException = string.Empty;
 
     protected void DrawConfig(ref bool hasChanged) {
-        hasChanged |= ImGui.Checkbox("Default cursor to the checkbox when one exists", ref Config.SelectCheckBox);
+        hasChanged |= ImGui.Checkbox(Loc.T("Default cursor to the checkbox when one exists"), ref Config.SelectCheckBox);
         ImGui.BeginDisabled(!Config.SelectCheckBox);
         ImGui.Indent();
-        hasChanged |= ImGui.Checkbox("Ignore the previous setting if the checkbox is ticked", ref Config.IgnoreTickedCheckBox);
+        hasChanged |= ImGui.Checkbox(Loc.T("Ignore the previous setting if the checkbox is ticked"), ref Config.IgnoreTickedCheckBox);
         ImGui.Unindent();
         ImGui.EndDisabled();
 
-        ImGui.Text("Enable for:");
+        ImGui.Text(Loc.T("Enable for:"));
         ImGui.Indent();
 
-        hasChanged |= ImGui.Checkbox("Most yes/(hold)/no dialogs", ref Config.YesNo);
+        hasChanged |= ImGui.Checkbox(Loc.T("Most yes/(hold)/no dialogs"), ref Config.YesNo);
         ImGui.Indent();
-        if (ImGui.CollapsingHeader("Exceptions##AlwaysYes")) {
-            ImGui.Text("Do not change default if dialog text contains:");
+        if (ImGui.CollapsingHeader(Loc.T("Exceptions") + "##AlwaysYes")) {
+            ImGui.Text(Loc.T("Do not change default if dialog text contains:"));
             for (var i = 0; i < Config.ExceptionsYesNo.Count; i++) {
                 ImGui.PushID($"AlwaysYesBlacklist_{i.ToString()}");
                 var exception = Config.ExceptionsYesNo[i];
@@ -95,20 +95,20 @@ public unsafe class AlwaysYes : UiAdjustments.SubTweak {
 
         ImGui.Unindent();
 
-        hasChanged |= ImGui.Checkbox("Duty confirmations", ref Config.DutyConfirmation);
-        hasChanged |= ImGui.Checkbox("TT cards sales", ref Config.CardsShop);
-        hasChanged |= ImGui.Checkbox("Retainer ventures", ref Config.RetainerVentures);
-        hasChanged |= ImGui.Checkbox("Retainer entrust duplicates", ref Config.RetainerEntrustDuplicates);
-        hasChanged |= ImGui.Checkbox("Materia melds", ref Config.MateriaMelds);
-        hasChanged |= ImGui.Checkbox("Materia extractions", ref Config.MateriaExtractions);
-        hasChanged |= ImGui.Checkbox("Materia retrievals", ref Config.MateriaRetrievals);
-        hasChanged |= ImGui.Checkbox("Glamour dispels", ref Config.GlamourDispels);
-        hasChanged |= ImGui.Checkbox("Dyes", ref Config.Dyes);
-        hasChanged |= ImGui.Checkbox("Desynthesis", ref Config.Desynthesis);
-        hasChanged |= ImGui.Checkbox("Automatic aetherial reduction", ref Config.AutomaticAetherialReduction);
-        hasChanged |= ImGui.Checkbox("Character selection dialogs", ref Config.Lobby);
-        hasChanged |= ImGui.Checkbox("Item exchange confirmations", ref Config.ItemExchangeConfirmations);
-        hasChanged |= ImGui.Checkbox("Blunderville exit dialog", ref Config.BlundervilleExitDialog);
+        hasChanged |= ImGui.Checkbox(Loc.T("Duty confirmations"), ref Config.DutyConfirmation);
+        hasChanged |= ImGui.Checkbox(Loc.T("TT cards sales"), ref Config.CardsShop);
+        hasChanged |= ImGui.Checkbox(Loc.T("Retainer ventures"), ref Config.RetainerVentures);
+        hasChanged |= ImGui.Checkbox(Loc.T("Retainer entrust duplicates"), ref Config.RetainerEntrustDuplicates);
+        hasChanged |= ImGui.Checkbox(Loc.T("Materia melds"), ref Config.MateriaMelds);
+        hasChanged |= ImGui.Checkbox(Loc.T("Materia extractions"), ref Config.MateriaExtractions);
+        hasChanged |= ImGui.Checkbox(Loc.T("Materia retrievals"), ref Config.MateriaRetrievals);
+        hasChanged |= ImGui.Checkbox(Loc.T("Glamour dispels"), ref Config.GlamourDispels);
+        hasChanged |= ImGui.Checkbox(Loc.T("Dyes"), ref Config.Dyes);
+        hasChanged |= ImGui.Checkbox(Loc.T("Desynthesis"), ref Config.Desynthesis);
+        hasChanged |= ImGui.Checkbox(Loc.T("Automatic aetherial reduction"), ref Config.AutomaticAetherialReduction);
+        hasChanged |= ImGui.Checkbox(Loc.T("Character selection dialogs"), ref Config.Lobby);
+        hasChanged |= ImGui.Checkbox(Loc.T("Item exchange confirmations"), ref Config.ItemExchangeConfirmations);
+        hasChanged |= ImGui.Checkbox(Loc.T("Blunderville exit dialog"), ref Config.BlundervilleExitDialog);
 
         ImGui.Unindent();
 

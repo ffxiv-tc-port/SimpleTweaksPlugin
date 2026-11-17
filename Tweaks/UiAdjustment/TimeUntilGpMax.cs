@@ -32,7 +32,7 @@ public unsafe class TimeUntilGpMax : UiAdjustments.SubTweak {
     protected void DrawConfig(ref bool hasChanged) {
         ImGui.Checkbox(LocString("EorzeaTime", "Display Eorzea Time"), ref Config.EorzeaTime);
         ImGui.SetNextItemWidth(200 * ImGui.GetIO().FontGlobalScale);
-        hasChanged |= ImGui.SliderInt("Target GP##timeUntilGpMax", ref Config.GpGoal, -1, 1000);
+        hasChanged |= ImGui.SliderInt(Loc.T("Target GP") + "##timeUntilGpMax", ref Config.GpGoal, -1, 1000);
         ImGui.SetNextItemWidth(200 * ImGui.GetIO().FontGlobalScale);
         if (ImGui.DragFloat2("Position##timeUntilGpMax", ref Config.PositionOffset)) {
             forceVisible = 5;

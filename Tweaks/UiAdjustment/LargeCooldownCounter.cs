@@ -38,7 +38,7 @@ public unsafe class LargeCooldownCounter : UiAdjustments.SubTweak {
             ImGui.PushStyleColor(ImGuiCol.Border, 0x880000FF);
             ImGui.PushStyleVar(ImGuiStyleVar.ChildBorderSize, 3);
             if (ImGui.BeginChild("setting_warning", new Vector2(ImGui.GetContentRegionAvail().X, textSize.Y + ImGui.GetStyle().WindowPadding.Y * 2), true)) {
-                if (ImGui.Button("Apply Config##largeCooldownFixButton", textSize with { X = 100 * ImGuiHelpers.GlobalScale })) {
+                if (ImGui.Button(Loc.T("Apply Config") + "##largeCooldownFixButton", textSize with { X = 100 * ImGuiHelpers.GlobalScale })) {
                     Service.GameConfig.Set(UiConfigOption.HotbarDispRecastTimeDispType, 1);
                 }
 

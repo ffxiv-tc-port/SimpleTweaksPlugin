@@ -32,14 +32,14 @@ public unsafe class AddNumberSeparators : UiAdjustments.SubTweak {
     [TweakConfig] public Configs Config { get; protected set; }
 
     protected void DrawConfig(ref bool hasChanged) {
-        hasChanged |= ImGui.Checkbox("Add separators to damage/healing numbers", ref Config.FlyText);
-        hasChanged |= ImGui.Checkbox("Add separators to party list HP", ref Config.PartyList);
-        hasChanged |= ImGui.Checkbox("Add separators to ability costs on hotbars", ref Config.AbilityCost);
-        hasChanged |= ImGui.Checkbox("Add separators to ability costs in tooltips", ref Config.AbilityTooltip);
+        hasChanged |= ImGui.Checkbox(Loc.T("Add separators to damage/healing numbers"), ref Config.FlyText);
+        hasChanged |= ImGui.Checkbox(Loc.T("Add separators to party list HP"), ref Config.PartyList);
+        hasChanged |= ImGui.Checkbox(Loc.T("Add separators to ability costs on hotbars"), ref Config.AbilityCost);
+        hasChanged |= ImGui.Checkbox(Loc.T("Add separators to ability costs in tooltips"), ref Config.AbilityTooltip);
 
         var custom = Config.CustomSeparator?.ToString() ?? string.Empty;
         
-        if (ImGui.InputText("Custom separator", ref custom, 1, ImGuiInputTextFlags.CallbackAlways, SelectChar)) {
+        if (ImGui.InputText(Loc.T("Custom separator"), ref custom, 1, ImGuiInputTextFlags.CallbackAlways, SelectChar)) {
             hasChanged = true;
             Config.CustomSeparator = string.IsNullOrEmpty(custom) || !char.IsAscii(custom[0]) || char.IsControl(custom[0]) ? null : custom[0];
             SetSeparatorDetour();

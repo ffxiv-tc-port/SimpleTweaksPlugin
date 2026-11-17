@@ -17,7 +17,7 @@ namespace SimpleTweaksPlugin.Tweaks;
 [TweakDescription("Adds a command to open the directory where client side character data is stored.")]
 public class ChrDirCommand : CommandTweak {
     protected override string Command => "chrdir";
-    protected override string HelpMessage => "Print your character save directory to chat. '/chrdir open' to open the directory in explorer.";
+    protected override string HelpMessage => Loc.T("Print your character save directory to chat. '/chrdir open' to open the directory in explorer.");
 
     [LinkHandler(LinkHandlerId.OpenFolderLink, nameof(OpenFolder))]
     private DalamudLinkPayload linkPayload;
@@ -36,7 +36,7 @@ public class ChrDirCommand : CommandTweak {
 
         Service.Chat.Print(new XivChatEntry() {
             Message= new SeString(new List<Payload>() {
-                new TextPayload("Character Directory:\n"),
+                new TextPayload(Loc.T("Character Directory:\n")),
                 new UIForegroundPayload(22),
                 linkPayload,
                 new TextPayload(saveDir),

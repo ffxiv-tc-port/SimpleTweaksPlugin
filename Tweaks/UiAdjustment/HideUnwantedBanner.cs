@@ -68,7 +68,7 @@ public unsafe class HideUnwantedBanner : UiAdjustments.SubTweak {
     private readonly HashSet<int> seenIds = [];
     
     protected void DrawConfig() {
-        ImGui.Checkbox("Show Preview", ref TweakConfig.ShowPreview);
+        ImGui.Checkbox(Loc.T("Show Preview"), ref TweakConfig.ShowPreview);
         ImGui.SameLine(ImGui.GetItemRectSize().X + 80);
         
         ImGui.SetNextItemWidth(250 * ImGuiHelpers.GlobalScale);;
@@ -76,7 +76,7 @@ public unsafe class HideUnwantedBanner : UiAdjustments.SubTweak {
             if (seenIds.Count == 0) {
                 ImGui.Dummy(new Vector2(300, 1) * ImGuiHelpers.GlobalScale);
                 using (ImRaii.PushColor(ImGuiCol.Text, ImGui.GetColorU32(ImGuiCol.TextDisabled))) {
-                    ImGui.TextWrapped("Banners will be displayed here if they are detected. Come back when you see one you want to block.");
+                    ImGui.TextWrapped(Loc.T("Banners will be displayed here if they are detected. Come back when you see one you want to block."));
                 }
             }
 

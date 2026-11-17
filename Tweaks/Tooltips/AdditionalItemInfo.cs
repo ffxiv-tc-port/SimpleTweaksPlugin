@@ -101,7 +101,7 @@ public unsafe class AdditionalItemInfo : TooltipTweaks.SubTweak {
                         _ => BitmapFontIcon.NoCircle
                     }));
                     
-                    str.AppendLine(new TextPayload($"Seals: {gcSealValue.SealsExpertDelivery:N0}"));
+                    str.AppendLine(new TextPayload(Loc.T("Seals: {0}", gcSealValue.SealsExpertDelivery.ToString("N0"))));
                 }
             }
         }

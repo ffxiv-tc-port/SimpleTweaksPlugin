@@ -11,7 +11,7 @@ namespace SimpleTweaksPlugin.Tweaks;
 [TweakReleaseVersion("1.9.0.0")]
 public unsafe class LeaveDutyCommand : CommandTweak {
     protected override string Command => "/leaveduty";
-    protected override string HelpMessage => "Leave the current duty";
+    protected override string HelpMessage => Loc.T("Leave the current duty");
 
     protected override void OnCommand(string args) {
         if (Service.Condition.Cutscene()) {

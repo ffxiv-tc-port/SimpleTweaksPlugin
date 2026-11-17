@@ -23,11 +23,11 @@ public unsafe class RecolorOwnStatusTimers : UiAdjustments.SubTweak {
     public Configs Config { get; private set; }
 
     protected void DrawConfig(ref bool hasChanged) {
-        hasChanged |= ImGui.ColorEdit4("Color##colorEditStatusTimers", ref Config.OwnStatusColor);
-        hasChanged |= ImGui.ColorEdit4("Edge Color##edgeColorEditStatusTimers", ref Config.OwnStatusEdgeColor);
+        hasChanged |= ImGui.ColorEdit4(Loc.T("Color") + "##colorEditStatusTimers", ref Config.OwnStatusColor);
+        hasChanged |= ImGui.ColorEdit4(Loc.T("Edge Color") + "##edgeColorEditStatusTimers", ref Config.OwnStatusEdgeColor);
 
         ImGui.AlignTextToFramePadding();
-        ImGui.Text("Reset: ");
+        ImGui.Text(Loc.T("Reset: "));
 
         ImGui.SameLine();
         ImGui.PushFont(UiBuilder.IconFont);

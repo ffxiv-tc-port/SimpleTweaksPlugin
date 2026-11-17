@@ -104,7 +104,7 @@ public unsafe class ItemHotkeys : TooltipTweaks.SubTweak {
         }
 
         ImGui.SameLine();
-        if (ImGui.Checkbox("Hide From Tooltip", ref hotkey.Config.HideFromTooltip)) {
+        if (ImGui.Checkbox(Loc.T("Hide From Tooltip"), ref hotkey.Config.HideFromTooltip)) {
             hotkey.SaveConfig();
         }
 

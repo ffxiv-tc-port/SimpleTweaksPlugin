@@ -37,18 +37,18 @@ namespace SimpleTweaksPlugin.Tweaks.UiAdjustment {
         private string newException = string.Empty;
 
         protected void DrawConfig(ref bool hasChanged) {
-            hasChanged |= ImGui.Checkbox("Hide", ref Config.Hide);
+            hasChanged |= ImGui.Checkbox(Loc.T("Hide"), ref Config.Hide);
             if (Config.Hide) {
                 ImGui.SameLine();
-                hasChanged |= ImGui.Checkbox("Show in combat", ref Config.ShowInCombat);
+                hasChanged |= ImGui.Checkbox(Loc.T("Show in combat"), ref Config.ShowInCombat);
             }
 
             if (!Config.Hide || Config.ShowInCombat) {
                 var offsetChanged = false;
                 ImGui.SetNextItemWidth(100 * ImGui.GetIO().FontGlobalScale);
-                offsetChanged |= ImGui.InputInt("Horizontal Offset##offsetPosition", ref Config.OffsetXPosition, 1);
+                offsetChanged |= ImGui.InputInt(Loc.T("Horizontal Offset") + "##offsetPosition", ref Config.OffsetXPosition, 1);
                 ImGui.SetNextItemWidth(100 * ImGui.GetIO().FontGlobalScale);
-                offsetChanged |= ImGui.InputInt("Vertical Offset##offsetPosition", ref Config.OffsetYPosition, 1);
+                offsetChanged |= ImGui.InputInt(Loc.T("Vertical Offset") + "##offsetPosition", ref Config.OffsetYPosition, 1);
                 ImGui.SetNextItemWidth(200 * ImGui.GetIO().FontGlobalScale);
                 offsetChanged |= ImGui.SliderFloat("##toastScale", ref Config.Scale, 0.1f, 5f, "Toast Scale: %.1fx");
                 if (offsetChanged) {
@@ -61,7 +61,7 @@ namespace SimpleTweaksPlugin.Tweaks.UiAdjustment {
 
             if (Config.Hide) return;
 
-            ImGui.Text("Hide toast if text contains:");
+            ImGui.Text(Loc.T("Hide toast if text contains:"));
             for (var i = 0; i < Config.Exceptions.Count; i++) {
                 ImGui.PushID($"Exception_{i.ToString()}");
                 var exception = Config.Exceptions[i];

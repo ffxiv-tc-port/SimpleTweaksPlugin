@@ -45,7 +45,7 @@ namespace SimpleTweaksPlugin.Tweaks.UiAdjustment {
                 }
 
                 ImGui.PopFont();
-                if (ImGui.IsItemHovered()) ImGui.SetTooltip("Above progress bar");
+                if (ImGui.IsItemHovered()) ImGui.SetTooltip(Loc.T("Above progress bar"));
 
                 ImGui.SameLine();
                 ImGui.PushFont(UiBuilder.IconFont);
@@ -56,7 +56,7 @@ namespace SimpleTweaksPlugin.Tweaks.UiAdjustment {
                 }
 
                 ImGui.PopFont();
-                if (ImGui.IsItemHovered()) ImGui.SetTooltip("Original Position");
+                if (ImGui.IsItemHovered()) ImGui.SetTooltip(Loc.T("Original Position"));
 
 
                 ImGui.SameLine();
@@ -68,10 +68,10 @@ namespace SimpleTweaksPlugin.Tweaks.UiAdjustment {
                 }
 
                 ImGui.PopFont();
-                if (ImGui.IsItemHovered()) ImGui.SetTooltip("Below progress bar");
+                if (ImGui.IsItemHovered()) ImGui.SetTooltip(Loc.T("Below progress bar"));
                 ImGui.PopStyleVar();
                 ImGui.SameLine();
-                ImGui.Text("Ability name vertical offset");
+                ImGui.Text(Loc.T("Ability name vertical offset"));
 
                 changed |= ImGuiExt.HorizontalAlignmentSelector("Ability Name Alignment",
                     ref LoadedConfig.NameAlignment, VerticalAlignment.Bottom);

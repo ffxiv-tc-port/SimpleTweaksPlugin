@@ -24,13 +24,13 @@ public unsafe class ImprovedSentMessageHistory : Tweak {
     
     protected void DrawConfig() {
         ImGui.SetNextItemWidth(250 * ImGuiHelpers.GlobalScale);
-        if (ImGui.SliderInt("Max messages in history", ref TweakConfig.MaxHistory, 0, 100)) {
+        if (ImGui.SliderInt(Loc.T("Max messages in history"), ref TweakConfig.MaxHistory, 0, 100)) {
             if (TweakConfig.MaxHistory < 0) TweakConfig.MaxHistory = 0;
         }
         
-        ImGui.Checkbox("Save written message ", ref TweakConfig.SaveWrittenMessage);
+        ImGui.Checkbox(Loc.T("Save written message "), ref TweakConfig.SaveWrittenMessage);
         ImGui.SameLine();
-        ImGuiComponents.HelpMarker("Saves the current chat message to history when recalling history, preventing you from losing a message you wrote.");
+        ImGuiComponents.HelpMarker(Loc.T("Saves the current chat message to history when recalling history, preventing you from losing a message you wrote."));
     }
 
     public Configs TweakConfig { get; set; }

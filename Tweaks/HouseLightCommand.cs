@@ -18,7 +18,7 @@ namespace SimpleTweaksPlugin.Tweaks;
 public unsafe class HouseLightCommand : CommandTweak {
     public override bool Experimental => true;
     protected override string Command => "lights";
-    protected override string HelpMessage => $"Adjust the lighting of the house or apartment you are currently in. /{CustomOrDefaultCommand} (0-5) [ssao-on | ssao-off] [save]";
+    protected override string HelpMessage => Loc.T("Adjust the lighting of the house or apartment you are currently in. /{0} (0-5) [ssao-on | ssao-off] [save]", CustomOrDefaultCommand);
     protected override bool ShowInHelp => true;
 
     private readonly string[] permanentMarkers = ["save"];
@@ -75,11 +75,11 @@ public unsafe class HouseLightCommand : CommandTweak {
         } else {
             Service.Chat.Print(
                 new SeString(
-                    new TextPayload("Lighting has been changed on your client. Use "),
+                    new TextPayload(Loc.T("Lighting has been changed on your client. Use ")),
                     new UIForegroundPayload(500),
                     new TextPayload($"/{Command} {brightness}  {(ssaoEnable ? "ssao-on" : "ssao-off")} save"),
                     new UIForegroundPayload(0),
-                    new TextPayload(" to make it permanent.")
+                    new TextPayload(Loc.T(" to make it permanent."))
                     )
                 );
         }

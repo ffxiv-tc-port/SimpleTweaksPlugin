@@ -108,7 +108,7 @@ public unsafe class ChangeMapAreaColors : UiAdjustments.SubTweak {
     private byte raveHue;
 
     protected void DrawConfig(ref bool hasChanged) {
-        ImGui.TextWrapped("Note: Map colors will only update upon closing and re-opening the map. The minimap will update instantly. Actual displayed colors may differ slightly due to transparency effects.");
+        ImGui.TextWrapped(Loc.T("Note: Map colors will only update upon closing and re-opening the map. The minimap will update instantly. Actual displayed colors may differ slightly due to transparency effects."));
 
         if (ImGui.BeginTable("configTable", 3, ImGuiTableFlags.Borders | ImGuiTableFlags.SizingFixedFit | ImGuiTableFlags.NoHostExtendX)) {
             ImGui.TableSetupColumn("On?");
@@ -162,16 +162,16 @@ public unsafe class ChangeMapAreaColors : UiAdjustments.SubTweak {
         }
 
         var raveMode = Config?.RaveMode ?? false;
-        if (ImGui.Checkbox("RAVE MODE", ref raveMode)) {
+        if (ImGui.Checkbox(Loc.T("RAVE MODE"), ref raveMode)) {
             Config!.RaveMode = raveMode;
             raveHue = 0;
 
             hasChanged = true;
         }
 
-        ImGuiComponents.HelpMarker("Rave Mode was a debug mode that was entertaining enough to make it into the final tweak. It makes map areas on the minimap taste the rainbow, and will change colors in the map window in a random-ish fashion whenever the map window is opened or updated. Different types of map areas may share colors if this option is enabled. \n\n This setting will have no effect in PVP.");
+        ImGuiComponents.HelpMarker(Loc.T("Rave Mode was a debug mode that was entertaining enough to make it into the final tweak. It makes map areas on the minimap taste the rainbow, and will change colors in the map window in a random-ish fashion whenever the map window is opened or updated. Different types of map areas may share colors if this option is enabled. \n\n This setting will have no effect in PVP."));
 
-        if (ImGui.Button("Reset Config")) {
+        if (ImGui.Button(Loc.T("Reset Config"))) {
             Config!.Areas.Clear();
             Config.RaveMode = false;
             hasChanged = true;

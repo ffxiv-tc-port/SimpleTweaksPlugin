@@ -56,24 +56,24 @@ public unsafe class SpecialCharacterInput : Tweak {
             hasChanged = true;
         }
         
-        hasChanged |= ImGui.Checkbox("Show Full Tab Titles", ref Config.ShowTitles);
-        hasChanged |= ImGui.Checkbox("Show All Tab", ref Config.ShowAllTab);
+        hasChanged |= ImGui.Checkbox(Loc.T("Show Full Tab Titles"), ref Config.ShowTitles);
+        hasChanged |= ImGui.Checkbox(Loc.T("Show All Tab"), ref Config.ShowAllTab);
 
-        hasChanged |= ImGui.Checkbox("Show History", ref Config.ShowHistory);
+        hasChanged |= ImGui.Checkbox(Loc.T("Show History"), ref Config.ShowHistory);
 
         using (ImRaii.Disabled(!Config.ShowHistory)) {
             ImGui.SameLine();
-            if (ImGui.SmallButton("Clear History")) {
+            if (ImGui.SmallButton(Loc.T("Clear History"))) {
                 Config.History.Clear();
             }
 
             using (ImRaii.PushIndent()) {
                 ImGui.SetNextItemWidth(130 * ImGuiHelpers.GlobalScale);
-                hasChanged |= ImGui.InputInt("Max History", ref Config.MaxHistory);
+                hasChanged |= ImGui.InputInt(Loc.T("Max History"), ref Config.MaxHistory);
             }
         }
 
-        if (ImGui.CollapsingHeader($"Custom Entries ({Config.Custom.Count})###customEntriesHeader")) {
+        if (ImGui.CollapsingHeader($"{Loc.T("Custom Entries ({0})", Config.Custom.Count)}###customEntriesHeader")) {
             var delete = -1;
             using (ImRaii.PushStyle(ImGuiStyleVar.ItemSpacing, new Vector2(1, ImGui.GetStyle().ItemSpacing.Y))) {
                 int i;

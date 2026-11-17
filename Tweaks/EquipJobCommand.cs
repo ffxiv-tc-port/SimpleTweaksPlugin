@@ -17,7 +17,7 @@ namespace SimpleTweaksPlugin.Tweaks;
 [TweakAutoConfig]
 public unsafe class EquipJobCommand : CommandTweak {
     protected override string Command => "equipjob";
-    protected override string HelpMessage => "Switches to the highest item-level gearset for a job.";
+    protected override string HelpMessage => Loc.T("Switches to the highest item-level gearset for a job.");
 
     private class Config : TweakConfig {
         public bool AllowPriority;

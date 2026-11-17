@@ -18,7 +18,7 @@ namespace SimpleTweaksPlugin.Tweaks;
 [TweakDescription("Adds commands to change various settings.")]
 public unsafe class SetOptionCommand : CommandTweak {
     protected override string Command => "setoption";
-    protected override string HelpMessage => "Usage: /setoption <option> <value>";
+    protected override string HelpMessage => Loc.T("Usage: /setoption <option> <value>");
     protected override string[] Alias => new[] { "setopt" };
 
     protected override void Setup() {

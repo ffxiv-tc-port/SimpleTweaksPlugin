@@ -58,28 +58,28 @@ public unsafe class HighResScreenshots : Tweak {
     protected void DrawConfig(ref bool hasChanged) {
         ImGui.TextWrapped(
             "This tweak will increase the resolution of screenshots taken in game. It will NOT increase the scale of your HUD/plugin windows.");
-        ImGui.TextWrapped("Your HUD will appear smaller while the screenshot is processing.");
+        ImGui.TextWrapped(Loc.T("Your HUD will appear smaller while the screenshot is processing."));
 
         ImGui.NewLine();
 
-        ImGui.TextWrapped("Higher scale will take longer and use more resources.");
+        ImGui.TextWrapped(Loc.T("Higher scale will take longer and use more resources."));
         ImGui.TextWrapped(
             "The higher the scale is, the longer the delay lasts. Experiment with these settings to find the best options for your system.");
 
         ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudRed);
-        ImGui.TextWrapped("The game WILL crash if you set the scale too high.");
+        ImGui.TextWrapped(Loc.T("The game WILL crash if you set the scale too high."));
         ImGui.PopStyleColor();
 
-        hasChanged |= ImGui.Checkbox("Use Fixed Resolution", ref Config.UseCustom);
+        hasChanged |= ImGui.Checkbox(Loc.T("Use Fixed Resolution"), ref Config.UseCustom);
 
         if (Config.UseCustom) {
 
-            hasChanged |= ImGui.InputInt("Width", ref Config.CustomWidth);
-            hasChanged |= ImGui.InputInt("Height", ref Config.CustomHeight);
+            hasChanged |= ImGui.InputInt(Loc.T("Width"), ref Config.CustomWidth);
+            hasChanged |= ImGui.InputInt(Loc.T("Height"), ref Config.CustomHeight);
 
         } else {
             ImGui.SetNextItemWidth(ImGuiHelpers.GlobalScale * 100);
-            hasChanged |= ImGui.InputInt("Scale", ref Config.Scale);
+            hasChanged |= ImGui.InputInt(Loc.T("Scale"), ref Config.Scale);
 
             ImGui.SameLine();
             var device = Device.Instance();
@@ -87,12 +87,12 @@ public unsafe class HighResScreenshots : Tweak {
         }
         
         ImGui.SetNextItemWidth(ImGuiHelpers.GlobalScale * 100);
-        hasChanged |= ImGui.InputFloat("Delay", ref Config.Delay);
+        hasChanged |= ImGui.InputFloat(Loc.T("Delay"), ref Config.Delay);
 
         if (Config.Scale < 1) Config.Scale = 1;
         if (Config.Delay < 0) Config.Delay = 0;
-        hasChanged |= ImGui.Checkbox("Hide Dalamud UI in screenshots", ref Config.HideDalamudUi);
-        hasChanged |= ImGui.Checkbox("Hide Game UI in screenshots", ref Config.HideGameUi);
+        hasChanged |= ImGui.Checkbox(Loc.T("Hide Dalamud UI in screenshots"), ref Config.HideDalamudUi);
+        hasChanged |= ImGui.Checkbox(Loc.T("Hide Game UI in screenshots"), ref Config.HideGameUi);
         if (copyrightShaderAddress == 0) {
             var disableColor = ImGui.GetColorU32(ImGuiCol.TextDisabled);
             ImGui.PushStyleColor(ImGuiCol.Text, disableColor);
@@ -101,16 +101,16 @@ public unsafe class HighResScreenshots : Tweak {
             ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, disableColor);
             ImGui.PushStyleColor(ImGuiCol.CheckMark, disableColor);
             var f = false;
-            ImGui.Checkbox("Remove copyight text", ref f);
+            ImGui.Checkbox(Loc.T("Remove copyight text"), ref f);
             ImGui.PopStyleColor(5);
             if (ImGui.IsItemHovered()) {
-                ImGui.SetTooltip("Failed to locate address needed for this option.");
+                ImGui.SetTooltip(Loc.T("Failed to locate address needed for this option."));
             }
         } else {
-            hasChanged |= ImGui.Checkbox("Remove copyright text", ref Config.RemoveCopyright);
+            hasChanged |= ImGui.Checkbox(Loc.T("Remove copyright text"), ref Config.RemoveCopyright);
         }
         
-        if (ImGui.Checkbox("Use ReShade to take screenshot", ref Config.UseReShade)) {
+        if (ImGui.Checkbox(Loc.T("Use ReShade to take screenshot"), ref Config.UseReShade)) {
             hasChanged = true;
         }
         
@@ -118,7 +118,7 @@ public unsafe class HighResScreenshots : Tweak {
             ImGui.Indent();
             ImGui.Indent();
 
-            ImGui.TextWrapped("Match your Current Keybind below to your ReShade screenshot keybind.\nWhile this option is enabled and configured, use your regular FFXIV screenshot key to take high-resolution screenshots.");
+            ImGui.TextWrapped(Loc.T("Match your Current Keybind below to your ReShade screenshot keybind.\nWhile this option is enabled and configured, use your regular FFXIV screenshot key to take high-resolution screenshots."));
             ImGui.Spacing();
             var keybindText = new List<string>();
             if (Config.ReShadeCtrl) keybindText.Add("CTRL");
@@ -126,14 +126,14 @@ public unsafe class HighResScreenshots : Tweak {
             if (Config.ReShadeShift) keybindText.Add("SHIFT");
             keybindText.Add($"{Config.ReShadeMainKey.GetFancyName()}");
             
-            ImGui.Text($"Current Keybind: {string.Join(" + ", keybindText)}");
+            ImGui.Text(Loc.T("Current Keybind: {0}", string.Join(" + ", keybindText)));
             if (updatingReShadeKeybind) {
-                if (ImGui.Button("Cancel Keybind Change")) {
+                if (ImGui.Button(Loc.T("Cancel Keybind Change"))) {
                     updatingReShadeKeybind = false;
                     Service.NativeKeyState.OnKeystroke -= OnKeystroke;
                 }
             } else {
-                if (ImGui.Button("Update Keybind")) {
+                if (ImGui.Button(Loc.T("Update Keybind"))) {
                     updatingReShadeKeybind = true;
                     Service.NativeKeyState.OnKeystroke += OnKeystroke;
                     

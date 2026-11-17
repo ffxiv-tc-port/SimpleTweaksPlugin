@@ -9,7 +9,7 @@ namespace SimpleTweaksPlugin.Tweaks;
 [TweakDescription("Adds a command to allow using any Main Command from chat or macro.")]
 public unsafe class MainCommandCommand : CommandTweak {
     protected override string Command => "maincommand";
-    protected override string HelpMessage => "Execute a Main Command";
+    protected override string HelpMessage => Loc.T("Execute a Main Command");
 
     protected override void OnCommand(string arguments) {
         if (uint.TryParse(arguments, out var id)) {

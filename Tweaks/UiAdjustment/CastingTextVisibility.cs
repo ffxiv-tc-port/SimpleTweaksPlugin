@@ -66,57 +66,57 @@ internal unsafe class CastingTextVisibility : UiAdjustments.SubTweak
         using var sliderGrab = ImRaii.PushColor(ImGuiCol.SliderGrab, new Vector4(23 / 255f, 230 / 255f, 141 / 255f, 1));
         using var frameBg = ImRaii.PushColor(ImGuiCol.FrameBg, new Vector4(64 / 255f, 128 / 255f, 100 / 255f, 1));
 
-        ImGui.Checkbox("Focus Target", ref Config.UseCustomFocusColor);
+        ImGui.Checkbox(Loc.T("Focus Target"), ref Config.UseCustomFocusColor);
         if (Config.UseCustomFocusColor)
         {
 
 
             ImGui.SetColorEditOptions(ImGuiColorEditFlags.None);
             ImGui.Indent();
-            ImGui.ColorEdit4("Text Colour##FocusTarget", ref Config.FocusTextColor);
-            ImGui.ColorEdit4("Edge Colour##FocusTarget", ref Config.FocusEdgeColor);
-            ImGui.ColorEdit4("Background Colour##FocusTarget", ref Config.FocusBackgroundColor);
-            ImGui.DragInt("Width Padding##FocusTarget", ref Config.FocusBackgroundWidthPadding, 0.6f, -10, 100);
-            ImGui.DragInt("Height Padding##FocusTarget", ref Config.FocusBackgroundHeightPadding, 0.6f, -10, 30);
-            ImGui.DragInt("Font Size##FocusTarget", ref Config.FocusFontSize, 0.4f, 12, 80);
+            ImGui.ColorEdit4(Loc.T("Text Colour") + "##FocusTarget", ref Config.FocusTextColor);
+            ImGui.ColorEdit4(Loc.T("Edge Colour") + "##FocusTarget", ref Config.FocusEdgeColor);
+            ImGui.ColorEdit4(Loc.T("Background Colour") + "##FocusTarget", ref Config.FocusBackgroundColor);
+            ImGui.DragInt(Loc.T("Width Padding") + "##FocusTarget", ref Config.FocusBackgroundWidthPadding, 0.6f, -10, 100);
+            ImGui.DragInt(Loc.T("Height Padding") + "##FocusTarget", ref Config.FocusBackgroundHeightPadding, 0.6f, -10, 30);
+            ImGui.DragInt(Loc.T("Font Size") + "##FocusTarget", ref Config.FocusFontSize, 0.4f, 12, 80);
 
             ImGui.VSliderFloat("##FocusTargetY", new Vector2(20, 160) * ImGuiHelpers.GlobalScale, ref Config.FocusPosition.Y, -80f, 80f, "");
             ImGui.SetNextItemWidth(160 * ImGuiHelpers.GlobalScale);
             ImGui.SameLine();
             ImGui.SetCursorPosX(ImGui.GetCursorPosX() - 6);
             ImGui.SetCursorPosY(ImGui.GetCursorPosY() + 69 * ImGuiHelpers.GlobalScale);
-            ImGui.SliderFloat("Position##FocusTargetX", ref Config.FocusPosition.X, -120f, 220f, "", ImGuiSliderFlags.NoInput);
+            ImGui.SliderFloat(Loc.T("Position") + "##FocusTargetX", ref Config.FocusPosition.X, -120f, 220f, "", ImGuiSliderFlags.NoInput);
             ImGui.SameLine();
             ImGui.SetCursorPosX(ImGui.GetCursorPosX() - 200 * ImGuiHelpers.GlobalScale);
             ImGui.SetCursorPosY(ImGui.GetCursorPosY() + 20 * ImGuiHelpers.GlobalScale);
-            ImGui.Checkbox("Right Align##FocusAlign", ref Config.FocusRightAlign);
+            ImGui.Checkbox(Loc.T("Right Align") + "##FocusAlign", ref Config.FocusRightAlign);
 
             ImGui.Unindent();
             ImGui.NewLine();
         }
 
-        ImGui.Checkbox("Target", ref Config.UseCustomTargetColor);
+        ImGui.Checkbox(Loc.T("Target"), ref Config.UseCustomTargetColor);
 
         if (Config.UseCustomTargetColor)
         {
             ImGui.Indent();
-            ImGui.ColorEdit4("Text Colour##Target", ref Config.TargetTextColor);
-            ImGui.ColorEdit4("Edge Colour##Target", ref Config.TargetEdgeColor);
-            ImGui.ColorEdit4("Background Colour##Target", ref Config.TargetBackgroundColor);
-            ImGui.DragInt("Width Padding##Target", ref Config.TargetBackgroundWidthPadding, 0.6f, -10, 100);
-            ImGui.DragInt("Height Padding##Target", ref Config.TargetBackgroundHeightPadding, 0.6f, -10, 30);
-            ImGui.DragInt("Font Size##Target", ref Config.TargetFontSize, 0.4f, 12, 80);
+            ImGui.ColorEdit4(Loc.T("Text Colour") + "##Target", ref Config.TargetTextColor);
+            ImGui.ColorEdit4(Loc.T("Edge Colour") + "##Target", ref Config.TargetEdgeColor);
+            ImGui.ColorEdit4(Loc.T("Background Colour") + "##Target", ref Config.TargetBackgroundColor);
+            ImGui.DragInt(Loc.T("Width Padding") + "##Target", ref Config.TargetBackgroundWidthPadding, 0.6f, -10, 100);
+            ImGui.DragInt(Loc.T("Height Padding") + "##Target", ref Config.TargetBackgroundHeightPadding, 0.6f, -10, 30);
+            ImGui.DragInt(Loc.T("Font Size") + "##Target", ref Config.TargetFontSize, 0.4f, 12, 80);
 
             ImGui.VSliderFloat("##TargetY", new Vector2(20, 160) * ImGuiHelpers.GlobalScale, ref Config.TargetPosition.Y, -80f, 120f, "");
             ImGui.SetNextItemWidth(160 * ImGuiHelpers.GlobalScale);            
             ImGui.SameLine();
             ImGui.SetCursorPosX(ImGui.GetCursorPosX() - 6 );
             ImGui.SetCursorPosY(ImGui.GetCursorPosY() + 69 * ImGuiHelpers.GlobalScale);
-            ImGui.SliderFloat("Position##TargetX", ref Config.TargetPosition.X, -180f, 460f, "", ImGuiSliderFlags.NoInput);
+            ImGui.SliderFloat(Loc.T("Position") + "##TargetX", ref Config.TargetPosition.X, -180f, 460f, "", ImGuiSliderFlags.NoInput);
             ImGui.SameLine();
             ImGui.SetCursorPosX(ImGui.GetCursorPosX() - 200 * ImGuiHelpers.GlobalScale);
             ImGui.SetCursorPosY(ImGui.GetCursorPosY() + 20 * ImGuiHelpers.GlobalScale);
-            ImGui.Checkbox("Right Align##TargetAlign", ref Config.TargetRightAlign);
+            ImGui.Checkbox(Loc.T("Right Align") + "##TargetAlign", ref Config.TargetRightAlign);
 
             ImGui.Unindent();
             ImGui.NewLine();

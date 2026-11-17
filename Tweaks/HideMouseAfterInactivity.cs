@@ -34,7 +34,7 @@ public unsafe class HideMouseAfterInactivity : Tweak {
     }
 
     protected void DrawConfig() {
-        ImGui.InputFloat("Hide after (seconds)", ref TweakConfig.InactiveSeconds, 0.1f);
+        ImGui.InputFloat(Loc.T("Hide after (seconds)"), ref TweakConfig.InactiveSeconds, 0.1f);
     }
 
     public Config TweakConfig { get; private set; }

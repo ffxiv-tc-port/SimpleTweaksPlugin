@@ -14,7 +14,7 @@ namespace SimpleTweaksPlugin.Tweaks;
 [TweakDescription("Adds /$[CustomOrDefaultCommand] to switch fishing baits.")]
 [Changelog("1.8.7.0", "Fixed tweak not enabling when starting the game.")]
 public unsafe class BaitCommand : CommandTweak {
-    protected override string HelpMessage => "Switches fishing baits.";
+    protected override string HelpMessage => Loc.T("Switches fishing baits.");
     protected override string Command => "bait";
 
     private static readonly Dictionary<string, uint> Bait = Service.Data.GetExcelSheet<Item>()!

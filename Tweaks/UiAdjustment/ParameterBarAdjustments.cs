@@ -107,7 +107,7 @@ public unsafe class ParameterBarAdjustments : UiAdjustments.SubTweak {
             ImGui.SameLine();
             ImGui.SetCursorPosX(290 * fontGlobalScale);
             ImGui.SetNextItemWidth(100 * fontGlobalScale);
-            hasChanged |= ImGui.InputInt($"Offset##offsetY_{label}", ref config.OffsetY);
+            hasChanged |= ImGui.InputInt($"{Loc.T("Offset")}##offsetY_{label}", ref config.OffsetY);
             ImGui.SameLine();
             ImGui.SetCursorPosX(540 * fontGlobalScale);
 

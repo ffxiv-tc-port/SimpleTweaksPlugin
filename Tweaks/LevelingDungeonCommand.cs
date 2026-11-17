@@ -17,7 +17,7 @@ public class LevelingDungeonCommand : CommandTweak
 {
     protected override string Command => "/levelingdungeon";
 
-    protected override string HelpMessage => "Open the highest level leveling dungeon.";
+    protected override string HelpMessage => Loc.T("Open the highest level leveling dungeon.");
     
     protected override unsafe void OnCommand(string args)
     {

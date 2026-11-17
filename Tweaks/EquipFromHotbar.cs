@@ -24,19 +24,19 @@ public unsafe class EquipFromHotbar : Tweak {
         using (ImRaii.PushIndent()) {
             ImGui.Bullet();
             ImGui.SameLine();
-            ImGui.TextWrapped("Equipment will be searched for in the armoury chest and main inventory.");
+            ImGui.TextWrapped(Loc.T("Equipment will be searched for in the armoury chest and main inventory."));
 
             ImGui.Bullet();
             ImGui.SameLine();
-            ImGui.TextWrapped("If multiple matching items are in your inventory, the first in inventory will be used.");
+            ImGui.TextWrapped(Loc.T("If multiple matching items are in your inventory, the first in inventory will be used."));
 
             ImGui.Bullet();
             ImGui.SameLine();
-            ImGui.TextWrapped("When equipping a ring, hold the SHIFT key to equip to left finger.");
+            ImGui.TextWrapped(Loc.T("When equipping a ring, hold the SHIFT key to equip to left finger."));
 
             ImGui.Bullet();
             ImGui.SameLine();
-            ImGui.TextWrapped("Any equipment with a special action, such as the teleport with Eternity Ring, will not equip from hotbars.");
+            ImGui.TextWrapped(Loc.T("Any equipment with a special action, such as the teleport with Eternity Ring, will not equip from hotbars."));
         }
     }
 

@@ -121,7 +121,7 @@ public abstract class BaseTweak {
                     if (previewImage != null) {
                         ImGui.Image(previewImage.Handle, new Vector2(previewImage.Width, previewImage.Height));
                     } else {
-                        ImGui.Text("Image Loading...");
+                        ImGui.Text(Loc.T("Image Loading..."));
                     }
                 } catch {
                     hasPreviewImage = false;
@@ -138,7 +138,7 @@ public abstract class BaseTweak {
 
         if (!string.IsNullOrEmpty(Author)) {
             ImGui.SameLine();
-            ImGui.TextDisabled($"  by {Author}");
+            ImGui.TextDisabled($"  {Loc.T("by {0}", Author)}");
         }
 
         if (PluginConfig.ShowTweakIDs) {
@@ -282,7 +282,7 @@ public abstract class BaseTweak {
                 if (Enabled && UseAutoConfig) DrawAutoConfig(ref hasChanged);
                 if (Enabled) DrawConfigTree?.Invoke(ref hasChanged);
                 if (this is CommandTweak ct) {
-                    if (Enabled && (UseAutoConfig || DrawConfigTree != null)) ImGui.Text("Customize Commands:");
+                    if (Enabled && (UseAutoConfig || DrawConfigTree != null)) ImGui.Text(Loc.T("Customize Commands:"));
                     using var _ = ImRaii.PushIndent(condition: Enabled && (UseAutoConfig || DrawConfigTree != null));
                     ct.DrawCommandEditor(false);
                 }
@@ -318,7 +318,7 @@ public abstract class BaseTweak {
         try {
             var configProperty = this.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic).FirstOrDefault(p => p.PropertyType.IsSubclassOf(typeof(TweakConfig)));
             if (configProperty == null) {
-                ImGui.Text("No Config Property Found");
+                ImGui.Text(Loc.T("No Config Property Found"));
                 return;
             }
 
@@ -386,14 +386,14 @@ public abstract class BaseTweak {
 
                     if (attr.EditorSize != int.MinValue) ImGui.SetNextItemWidth(attr.EditorSize == -1 ? -1 : attr.EditorSize * ImGui.GetIO().FontGlobalScale);
 
-                    if (ImGui.BeginCombo($"{localizedName}##{f.Name}_{this.GetType().Namespace}_{configOptionIndex++}", $"{v.GetDescription()}")) {
+                    if (ImGui.BeginCombo($"{localizedName}##{f.Name}_{this.GetType().Namespace}_{configOptionIndex++}", $"{v.GetLocalizedDescription()}")) {
                         foreach (var eV in f.FieldType.GetEnumValues()) {
                             if (eV is not Enum enumValue) {
                                 ImGui.Selectable($"???{eV}");
                                 continue;
                             }
 
-                            if (ImGui.Selectable($"{enumValue.GetDescription()}", v.Equals(enumValue))) {
+                            if (ImGui.Selectable($"{enumValue.GetLocalizedDescription()}", v.Equals(enumValue))) {
                                 f.SetValue(configObj, enumValue);
                             }
 
@@ -411,7 +411,7 @@ public abstract class BaseTweak {
 
                 if (!string.IsNullOrWhiteSpace(attr.HelpText)) {
                     ImGui.SameLine();
-                    ImGuiComponents.HelpMarker(attr.HelpText);
+                    ImGuiComponents.HelpMarker(Loc.T(attr.HelpText));
                 }
             }
         } catch (Exception ex) {
@@ -424,7 +424,7 @@ public abstract class BaseTweak {
         SimpleLog.Debug($"[{Key}] Command Handler: {string.Join(" , ", args)}");
         if (UseAutoConfig) {
             if (!Enabled) {
-                Service.Chat.PrintError($"'{Name}' is not enabled.");
+                Service.Chat.PrintError(Loc.T("'{0}' is not enabled.", Name));
                 return;
             }
 
@@ -460,7 +460,7 @@ public abstract class BaseTweak {
                                     break;
                                 }
                                 default: {
-                                    Service.Chat.PrintError($"'{args[1]}' is not a valid value for a boolean.");
+                                    Service.Chat.PrintError(Loc.T("'{0}' is not a valid value for a boolean.", args[1]));
                                     return;
                                 }
                             }
@@ -472,7 +472,7 @@ public abstract class BaseTweak {
                                 field.f.SetValue(configObj, val);
                                 RequestSaveConfig();
                             } else {
-                                Service.Chat.PrintError($"'{args[1]}' is not a valid integer between {field.Item2.IntMin} and {field.Item2.IntMax}.");
+                                Service.Chat.PrintError(Loc.T("'{0}' is not a valid integer between {1} and {2}.", args[1], field.Item2.IntMin, field.Item2.IntMax));
                             }
                         }
 
@@ -481,7 +481,7 @@ public abstract class BaseTweak {
                 }
 
                 // Print all options
-                if (args.Length == 0) Service.Chat.PrintError($"'{Name}' Command Config:");
+                if (args.Length == 0) Service.Chat.PrintError(Loc.T("'{0}' Command Config:", Name));
                 foreach (var aField in fields) {
                     if (args.Length > 0) {
                         if (args[0] != aField.f.Name) continue;
@@ -506,7 +506,7 @@ public abstract class BaseTweak {
             }
         }
 
-        Service.Chat.PrintError($"'{Name}' does not support command usage.");
+        Service.Chat.PrintError(Loc.T("'{0}' does not support command usage.", Name));
     }
 
     protected delegate void DrawConfigDelegate(ref bool hasChanged);

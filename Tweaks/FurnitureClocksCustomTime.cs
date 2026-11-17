@@ -40,7 +40,7 @@ public unsafe class FurnitureClocksCustomTime : Tweak {
             var modified = ImGui.InputInt("##Hour", ref h);
             ImGui.SameLine();
             ImGui.SetNextItemWidth(100 * ImGuiHelpers.GlobalScale);
-            modified |= ImGui.InputInt("Time", ref m);
+            modified |= ImGui.InputInt(Loc.T("Time"), ref m);
 
             if (modified) {
                 while (h <= 0) h += 12;
@@ -48,10 +48,10 @@ public unsafe class FurnitureClocksCustomTime : Tweak {
                 Config.FixedTime = h * 60 + m;
             }
         } else if (Config.Mode == TimeMode.Custom) {
-            ImGui.InputInt("Offset (minutes)", ref Config.CustomTimeOffset, 15);
+            ImGui.InputInt(Loc.T("Offset (minutes)"), ref Config.CustomTimeOffset, 15);
         } else {
             var o = $"{(Config.Mode == TimeMode.Local ? DateTimeOffset.Now.Offset.TotalMinutes : 0f)}";
-            ImGui.InputText("Offset (minutes)", ref o, 15, ImGuiInputTextFlags.ReadOnly);
+            ImGui.InputText(Loc.T("Offset (minutes)"), ref o, 15, ImGuiInputTextFlags.ReadOnly);
         }
     }
 

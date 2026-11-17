@@ -31,13 +31,13 @@ public unsafe class IncreaseChatBubbleLines : Tweak {
     protected void DrawConfig(ref bool hasChanged) {
         var timeSeconds = TweakConfig.Duration / 1000f;
         ImGui.SetNextItemWidth(110 * ImGuiHelpers.GlobalScale);
-        if (ImGui.InputFloat("Bubble Duration (seconds)", ref timeSeconds, 0.1f, 1f, "%.1f")) {
+        if (ImGui.InputFloat(Loc.T("Bubble Duration (seconds)"), ref timeSeconds, 0.1f, 1f, "%.1f")) {
             TweakConfig.Duration = Math.Clamp((int)MathF.Round(timeSeconds * 10), 10, 600) * 100;
             hasChanged = true;
         }
 
         ImGui.SetNextItemWidth(110 * ImGuiHelpers.GlobalScale);
-        hasChanged |= ImGui.InputInt("Additional time per character of message (milliseconds)", ref TweakConfig.AddDurationPerCharacter, 1, 10);
+        hasChanged |= ImGui.InputInt(Loc.T("Additional time per character of message (milliseconds)"), ref TweakConfig.AddDurationPerCharacter, 1, 10);
     }
     
     

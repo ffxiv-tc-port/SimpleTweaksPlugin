@@ -31,13 +31,15 @@ public static class Extensions {
         return attribs.Length > 0 ? ((System.ComponentModel.DescriptionAttribute)attribs[0]).Description : @enum.ToString();
     }
 
+    public static string GetLocalizedDescription(this Enum @enum) => Loc.T(@enum.GetDescription());
+
     public static bool TryGetTooltip(this Enum @enum, [NotNullWhen(true)] out string? tooltip) {
         tooltip = string.Empty;
         var eType = @enum.GetType();
         var member = eType.GetMember(@enum.ToString());
         if (member.Length <= 0) return false;
         var attribs = member[0].GetCustomAttributes(typeof(EnumTooltipAttribute), false);
-        tooltip =  attribs.Length > 0 ? ((EnumTooltipAttribute)attribs[0]).Text : null;
+        tooltip =  attribs.Length > 0 ? Loc.T(((EnumTooltipAttribute)attribs[0]).Text) : null;
         return tooltip != null;
     }
 

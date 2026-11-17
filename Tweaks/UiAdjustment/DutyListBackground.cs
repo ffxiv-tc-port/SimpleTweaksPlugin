@@ -95,8 +95,8 @@ public unsafe class DutyListBackground : UiAdjustments.SubTweak {
 
     private void DrawConfig() {
         var changed = false;
-        changed |= ImGui.ColorEdit4($"Background Color##ColorEdit", ref TweakConfig.BackgroundColor, ImGuiColorEditFlags.NoInputs | ImGuiColorEditFlags.AlphaPreviewHalf | ImGuiColorEditFlags.AlphaBar);
-        changed |= ImGui.Checkbox("Hide in Duties", ref TweakConfig.HideInDuties);
+        changed |= ImGui.ColorEdit4($"{Loc.T("Background Color")}##ColorEdit", ref TweakConfig.BackgroundColor, ImGuiColorEditFlags.NoInputs | ImGuiColorEditFlags.AlphaPreviewHalf | ImGuiColorEditFlags.AlphaBar);
+        changed |= ImGui.Checkbox(Loc.T("Hide in Duties"), ref TweakConfig.HideInDuties);
         
         if (changed) {
             if (Common.GetUnitBase("_ToDoList", out var unitBase)) {

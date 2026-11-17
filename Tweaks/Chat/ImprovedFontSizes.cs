@@ -79,8 +79,8 @@ public unsafe class ImprovedFontSizes : ChatTweaks.SubTweak {
         if (Config.FontSize is not { Length: 4 }) Config.FontSize = [12, 12, 12, 12];
 
         if (Common.GetUnitBase("ConfigCharacter", out _)) {
-            ImGui.Text("Please close the character config window to make changes to this tweak.");
-            if (ImGui.Button("Close It")) {
+            ImGui.Text(Loc.T("Please close the character config window to make changes to this tweak."));
+            if (ImGui.Button(Loc.T("Close It"))) {
                 Service.Framework.RunOnFrameworkThread(() => { AgentModule.Instance()->GetAgentByInternalId(AgentId.ConfigCharacter)->Hide(); });
             }
 
@@ -95,7 +95,7 @@ public unsafe class ImprovedFontSizes : ChatTweaks.SubTweak {
 
             for (var i = 0; i < 4; i++) {
                 ImGui.TableNextColumn();
-                ImGui.Text($"Chat Panel {i + 1}");
+                ImGui.Text(Loc.T("Chat Panel {0}", i + 1));
                 ImGui.TableNextColumn();
                 ImGui.SetNextItemWidth(-1);
                 if (ImGui.SliderInt($"##chatPanelFontSize_{i}", ref Config.FontSize[i], MinimumFontSize, MaximumFontSize)) {
@@ -160,7 +160,7 @@ public unsafe class ImprovedFontSizes : ChatTweaks.SubTweak {
                     var str = txt.Append(new List<Payload>() {
                         identifier,
                         new UIForegroundPayload(3),
-                        new TextPayload(" (Managed by Simple Tweaks)"),
+                        new TextPayload(Loc.T(" (Managed by Simple Tweaks)")),
                         new UIForegroundPayload(0)
                     });
                     tnc->SetText(str.EncodeWithNullTerminator());

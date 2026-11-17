@@ -163,14 +163,14 @@ public unsafe class FoodStats : TooltipTweaks.SubTweak {
                 payloads.Add(new TextPayload($"{value}%"));
                 if (change < max) {
                     if (Config.Highlight) payloads.Add(new UIForegroundPayload(0));
-                    payloads.Add(new TextPayload($" (Current "));
+                    payloads.Add(new TextPayload(Loc.T(" (Current ")));
                     if (Config.Highlight) payloads.Add(new UIForegroundPayload(500));
                     payloads.Add(new TextPayload($"{change}"));
                     if (Config.Highlight) payloads.Add(new UIForegroundPayload(0));
                     payloads.Add(new TextPayload($")"));
                 }
 
-                payloads.Add(new TextPayload(" (Max "));
+                payloads.Add(new TextPayload(Loc.T(" (Max ")));
                 if (Config.Highlight && change == max) payloads.Add(new UIForegroundPayload(500));
                 payloads.Add(new TextPayload($"{max}"));
                 if (Config.Highlight && change == max) payloads.Add(new UIForegroundPayload(0));

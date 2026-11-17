@@ -31,7 +31,7 @@ public unsafe class SearchableFriendList : Tweak {
     }
 
     protected void DrawConfig() {
-        if (ImGui.InputText("Search", ref searchString, 60)) {
+        if (ImGui.InputText(Loc.T("Search"), ref searchString, 60)) {
             InfoProxyFriendList.Instance()->ApplyFilters();
         }
     }

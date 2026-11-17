@@ -158,35 +158,31 @@ public partial class KeyInterrupt : Tweak {
     }
 
     protected void DrawConfig(ref bool hasChanged) {
-        ImGui.TextColored(ImGuiColors.DalamudRed, "WARNING: ");
+        ImGui.TextColored(ImGuiColors.DalamudRed, Loc.T("WARNING: "));
         ImGui.SameLine();
-        ImGui.TextWrapped("This Tweak will allow FFXIV to read all keystrokes from your computer while it is " +
-                          "running. While care has been taken to ensure that this is done safely (and the game does " +
-                          "nothing when it's not in focus), this may trigger certain antivirus or security software. " +
-                          "In rare conditions, this Tweak may also cause input lag in other applications while FFXIV " +
-                          "is open.");
+        ImGui.TextWrapped(Loc.T("This Tweak will allow FFXIV to read all keystrokes from your computer while it is running. While care has been taken to ensure that this is done safely (and the game does nothing when it's not in focus), this may trigger certain antivirus or security software. In rare conditions, this Tweak may also cause input lag in other applications while FFXIV is open."));
         
         ImGui.Spacing();
         
-        if (ImGui.Checkbox("Block Alt-Tab", ref this.Config.BlockAltTab)) {
+        if (ImGui.Checkbox(Loc.T("Block Alt-Tab"), ref this.Config.BlockAltTab)) {
             hasChanged = true;
         }
 
-        if (ImGui.Checkbox("Block Windows Key", ref this.Config.BlockWinKey)) {
+        if (ImGui.Checkbox(Loc.T("Block Windows Key"), ref this.Config.BlockWinKey)) {
             hasChanged = true;
         }
 
-        if (ImGui.Checkbox("Block Ctrl-Esc", ref this.Config.BlockCtrlEsc)) {
+        if (ImGui.Checkbox(Loc.T("Block Ctrl-Esc"), ref this.Config.BlockCtrlEsc)) {
             hasChanged = true;
         }
         
-        if (ImGui.Checkbox("Block Caps Lock", ref this.Config.BlockCapsLock)) {
+        if (ImGui.Checkbox(Loc.T("Block Caps Lock"), ref this.Config.BlockCapsLock)) {
             hasChanged = true;
         }
 
         ImGui.Spacing();
 
-        if (ImGui.Checkbox("Only Apply In Combat", ref this.Config.InCombatOnly)) {
+        if (ImGui.Checkbox(Loc.T("Only Apply In Combat"), ref this.Config.InCombatOnly)) {
             hasChanged = true;
         }
     }

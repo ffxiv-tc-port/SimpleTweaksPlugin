@@ -79,7 +79,7 @@ public class TryOnCorrectItem : Tweak {
 
             ImGui.TableNextColumn();
             if (name != "Default") {
-                if (ImGui.Button("Remove")) {
+                if (ImGui.Button(Loc.T("Remove"))) {
                     removalQueue.Add(name);
                 }
             }

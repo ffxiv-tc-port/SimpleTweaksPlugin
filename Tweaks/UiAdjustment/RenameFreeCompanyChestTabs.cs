@@ -37,11 +37,11 @@ public unsafe class RenameFreeCompanyChestTabs : UiAdjustments.SubTweak {
         var fc = InfoProxyFreeCompany.Instance();
         if (fcConfig == null) {
             if (fc->Id == 0) {
-                ImGui.TextDisabled("Free company data is not available.");
+                ImGui.TextDisabled(Loc.T("Free company data is not available."));
                 return;
             }
 
-            if (ImGui.Button($"Add config for '{Common.DefaultStringIfEmptyOrWhitespace(fc->NameString, "Free Company")}'")) {
+            if (ImGui.Button(Loc.T("Add config for '{0}'", Common.DefaultStringIfEmptyOrWhitespace(fc->NameString, Loc.T("Free Company"))))) {
                 Config.FreeCompanies.Add(fc->Id, new FreeCompanyConfig { FreeCompanyName = Common.DefaultStringIfEmptyOrWhitespace(fc->NameString) });
                 hasChanged = true;
             }
@@ -51,11 +51,11 @@ public unsafe class RenameFreeCompanyChestTabs : UiAdjustments.SubTweak {
 
         if (fcConfig.TabNames.Length < 5) fcConfig.TabNames = new string[5];
 
-        ImGui.Text($"Config for {Common.DefaultStringIfEmptyOrWhitespace(fc->NameString, fcConfig.FreeCompanyName)}:");
+        ImGui.Text(Loc.T("Config for {0}:", Common.DefaultStringIfEmptyOrWhitespace(fc->NameString, fcConfig.FreeCompanyName)));
         using (ImRaii.PushIndent()) {
             for (var i = 0; i < 5; i++) {
                 if (fcConfig.TabNames[i] == null) fcConfig.TabNames[i] = string.Empty;
-                hasChanged |= ImGui.InputText($"Tab {(char)(SeIconChar.BoxedNumber1 + i)}", ref fcConfig.TabNames[i], 20);
+                hasChanged |= ImGui.InputText(Loc.T("Tab {0}", (char)(SeIconChar.BoxedNumber1 + i)), ref fcConfig.TabNames[i], 20);
             }
         }
     }

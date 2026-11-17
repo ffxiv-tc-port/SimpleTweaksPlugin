@@ -110,7 +110,7 @@ public unsafe class CustomTimeFormat : UiAdjustments.SubTweak {
             ImGui.SetNextItemWidth(120);
             ImGui.InputText($"###preview{name}", ref preview, 50, ImGuiInputTextFlags.ReadOnly);
         } catch {
-            ImGui.Text("Format Invalid");
+            ImGui.Text(Loc.T("Format Invalid"));
         }
     }
 
@@ -245,7 +245,7 @@ public unsafe class CustomTimeFormat : UiAdjustments.SubTweak {
                 }
             }
         } catch {
-            timeSeString.Payloads.Add(new TextPayload("Invalid Time Format"));
+            timeSeString.Payloads.Add(new TextPayload(Loc.T("Invalid Time Format")));
         }
 
         if (timeSeString.Payloads.Count > 0) {

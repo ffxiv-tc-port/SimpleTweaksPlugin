@@ -105,7 +105,7 @@ public abstract class CommandTweak : Tweak {
         }).ToList();
 
     public void DrawCommandEditor(bool withTree = true) {
-        var show = !withTree || ImGui.TreeNode($"Command Customization##{Key}");
+        var show = !withTree || ImGui.TreeNode($"{Loc.T("Command Customization")}##{Key}");
         if (!show) return;
 
         ImGui.SetNextItemWidth(150 * ImGuiHelpers.GlobalScale);
@@ -113,7 +113,7 @@ public abstract class CommandTweak : Tweak {
 
         ImGui.SameLine();
         ImGui.BeginDisabled(customMainCommand == customMainCommandInput || customMainCommandInput.Contains(' '));
-        if (ImGui.Button($"Apply##commandEdit_{Key}")) {
+        if (ImGui.Button($"{Loc.T("Apply")}##commandEdit_{Key}")) {
             if (string.IsNullOrWhiteSpace(customMainCommandInput)) {
                 customMainCommand = string.Empty;
                 customMainCommandInput = string.Empty;
@@ -137,13 +137,13 @@ public abstract class CommandTweak : Tweak {
         ImGui.EndDisabled();
         ImGui.SameLine();
         if (customMainCommandInput.Contains(' ')) {
-            ImGui.TextDisabled("Command must not contain any spaces.");
+            ImGui.TextDisabled(Loc.T("Command must not contain any spaces."));
         } else {
-            ImGui.Text("Main Command");
+            ImGui.Text(Loc.T("Main Command"));
         }
 
         if (Alias.Length > 0) {
-            ImGui.Text("Aliases:");
+            ImGui.Text(Loc.T("Aliases:"));
             ImGui.Indent();
             if (!PluginConfig.DisabledCommandAlias.TryGetValue(Key, out var disabledCommandAlias)) {
                 disabledCommandAlias = new List<string>();

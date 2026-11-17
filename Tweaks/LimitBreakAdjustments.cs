@@ -31,15 +31,15 @@ public unsafe class LimitBreakAdjustments : UiAdjustments.SubTweak {
     private byte resetValue;
 
     protected void DrawConfig() {
-        ImGui.DragFloat("Bar Rotation", ref Config.BarRotation, 0.5f, -360, 720, "%.1f");
+        ImGui.DragFloat(Loc.T("Bar Rotation"), ref Config.BarRotation, 0.5f, -360, 720, "%.1f");
         while (Config.BarRotation >= 360) Config.BarRotation -= 360;
         while (Config.BarRotation < 0) Config.BarRotation += 360;
 
         ImGui.DragFloat2("Bar Seperation", ref Config.BarSpacing);
 
-        ImGui.Checkbox("Hide Text", ref Config.HideText);
+        ImGui.Checkbox(Loc.T("Hide Text"), ref Config.HideText);
         ImGui.DragFloat2("Text Position", ref Config.TextPosition);
-        ImGui.Checkbox("Preview Bar", ref previewLimitBreak);
+        ImGui.Checkbox(Loc.T("Preview Bar"), ref previewLimitBreak);
 
         if (previewLimitBreak) {
             if (previewVisibleCounter == 0) resetValue = LimitBreakController.Instance()->BarCount;

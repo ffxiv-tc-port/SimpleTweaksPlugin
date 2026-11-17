@@ -107,7 +107,7 @@ public unsafe class SyncGathererBars : Tweak {
         if (Config.StandardBars.Length != 10) Config.StandardBars = new bool[10];
         if (Config.CrossBars.Length != 8) Config.CrossBars = new bool[8];
 
-        ImGui.Text("Select bars to sync between miner and botanist.");
+        ImGui.Text(Loc.T("Select bars to sync between miner and botanist."));
         ImGui.Indent();
 
         var columns = (int)(ImGuiExt.GetWindowContentRegionSize().X / (150f * ImGui.GetIO().FontGlobalScale));
@@ -116,17 +116,17 @@ public unsafe class SyncGathererBars : Tweak {
         for (var i = 0; i < Config.StandardBars.Length; i++) {
             var isShared = IsShared(i, false);
             using (ImRaii.Disabled(isShared)) {
-                ImGui.Checkbox($"Hotbar {i + 1}##syncBar_{i}", ref Config.StandardBars[i]);
+                ImGui.Checkbox($"{Loc.T("Hotbar {0}", i + 1)}##syncBar_{i}", ref Config.StandardBars[i]);
             }
 
             if (isShared && ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled)) {
-                ImGui.SetTooltip("Shared Hotbars will not be synced");
+                ImGui.SetTooltip(Loc.T("Shared Hotbars will not be synced"));
             }
 
             if (isShared && Config.StandardBars[i]) {
                 using (ImRaii.PushColor(ImGuiCol.TextDisabled, ImGuiColors.DalamudYellow)) {
                     ImGui.SameLine();
-                    ImGuiComponents.HelpMarker("Shared Hotbars will not be synced");
+                    ImGuiComponents.HelpMarker(Loc.T("Shared Hotbars will not be synced"));
                 }
             }
 
@@ -138,17 +138,17 @@ public unsafe class SyncGathererBars : Tweak {
         for (var i = 0; i < Config.CrossBars.Length; i++) {
             var isShared = IsShared(i, true);
             using (ImRaii.Disabled(isShared)) {
-                ImGui.Checkbox($"Cross Hotbar {i + 1}##syncCrossBar_{i}", ref Config.CrossBars[i]);
+                ImGui.Checkbox($"{Loc.T("Cross Hotbar {0}", i + 1)}##syncCrossBar_{i}", ref Config.CrossBars[i]);
             }
 
             if (isShared && ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled)) {
-                ImGui.SetTooltip("Shared Cross Hotbars will not be synced");
+                ImGui.SetTooltip(Loc.T("Shared Cross Hotbars will not be synced"));
             }
 
             if (isShared && Config.CrossBars[i]) {
                 using (ImRaii.PushColor(ImGuiCol.TextDisabled, ImGuiColors.DalamudYellow)) {
                     ImGui.SameLine();
-                    ImGuiComponents.HelpMarker("Shared Cross Hotbars will not be synced");
+                    ImGuiComponents.HelpMarker(Loc.T("Shared Cross Hotbars will not be synced"));
                 }
             }
 

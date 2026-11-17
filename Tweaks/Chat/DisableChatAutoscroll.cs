@@ -31,12 +31,12 @@ public unsafe class DisableChatAutoscroll : ChatTweaks.SubTweak {
     private void DrawPanelConfig(string name, ref bool hasChanged, PanelConfig panelConfig) {
         using var _ = ImRaii.PushId(name);
 
-        hasChanged |= ImGui.Checkbox($"Disable Autoscroll in {name}", ref panelConfig.Enabled);
+        hasChanged |= ImGui.Checkbox(Loc.T("Disable Autoscroll in {0}", name), ref panelConfig.Enabled);
 
         if (panelConfig.Enabled) {
             ImGui.SetNextItemWidth(90 * ImGuiHelpers.GlobalScale);
             ImGui.Indent();
-            hasChanged |= ImGui.InputInt("Minimum messages below scroll", ref panelConfig.Tolerance);
+            hasChanged |= ImGui.InputInt(Loc.T("Minimum messages below scroll"), ref panelConfig.Tolerance);
             ImGui.Unindent();
         }
 

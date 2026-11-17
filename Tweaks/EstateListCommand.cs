@@ -13,7 +13,7 @@ namespace SimpleTweaksPlugin.Tweaks;
 [Changelog("1.8.7.2", "Fixed tweak not working in 6.4")]
 public unsafe class EstateListCommand : CommandTweak {
     protected override string Command => "estatelist";
-    protected override string HelpMessage => "Opens the estate list for one of your friends.";
+    protected override string HelpMessage => Loc.T("Opens the estate list for one of your friends.");
 
     protected override void OnCommand(string arguments) {
         if (string.IsNullOrWhiteSpace(arguments)) {

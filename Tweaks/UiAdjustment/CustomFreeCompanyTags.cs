@@ -361,7 +361,7 @@ public unsafe class CustomFreeCompanyTags : UiAdjustments.SubTweak {
 
             ImGui.TableNextColumn();
             ImGui.TableNextColumn();
-            ImGui.Text("Add FC:");
+            ImGui.Text(Loc.T("Add FC:"));
 
             ImGui.TableNextColumn();
             ImGui.SetNextItemWidth(-1);
@@ -384,7 +384,7 @@ public unsafe class CustomFreeCompanyTags : UiAdjustments.SubTweak {
 
             ImGui.EndTable();
 
-            if (ImGui.CollapsingHeader("Supported Icons")) {
+            if (ImGui.CollapsingHeader(Loc.T("Supported Icons"))) {
                 if (ImGui.BeginTable("iconViewer", 1 + (int)(ImGui.GetContentRegionAvail().X / 100))) {
                     foreach (var i in GraphicFont.FontIcons.Icons) {
                         if (i.IsValid()) {
@@ -426,7 +426,7 @@ public unsafe class CustomFreeCompanyTags : UiAdjustments.SubTweak {
                 changeType = ChangeType.Delete;
             }
 
-            if (ImGui.IsItemHovered()) ImGui.SetTooltip($"Remove {name}");
+            if (ImGui.IsItemHovered()) ImGui.SetTooltip(Loc.T("Remove {0}", name));
         }
 
         ImGui.TableNextColumn();
@@ -473,34 +473,34 @@ public unsafe class CustomFreeCompanyTags : UiAdjustments.SubTweak {
                         ImGui.TableNextColumn();
                         ImGui.Text("<i> & </i>");
                         ImGui.TableNextColumn();
-                        ImGui.Text("Begin and end Italics.");
+                        ImGui.Text(Loc.T("Begin and end Italics."));
                         ImGui.TableNextColumn();
                         ImGui.Text("<fctag>");
                         ImGui.TableNextColumn();
-                        ImGui.Text("The character's existing FC tag.");
+                        ImGui.Text(Loc.T("The character's existing FC tag."));
 
                         ImGui.TableNextColumn();
                         ImGui.Text("<level>");
                         ImGui.TableNextColumn();
-                        ImGui.Text("The character's current job level.");
+                        ImGui.Text(Loc.T("The character's current job level."));
 
                         ImGui.TableNextColumn();
                         ImGui.Text("<homeworld>");
                         ImGui.TableNextColumn();
-                        ImGui.Text("The name of the character's homeworld.");
+                        ImGui.Text(Loc.T("The name of the character's homeworld."));
 
                         ImGui.TableNextColumn();
                         ImGui.Text("<crossworldicon>");
                         ImGui.TableNextColumn();
-                        ImGui.Text($"The {(char)SeIconChar.CrossWorld} icon.");
+                        ImGui.Text(Loc.T("The {0} icon.", (char)SeIconChar.CrossWorld));
                         ImGui.TableNextColumn();
                         ImGui.Text("<colour:#abc123> & </colour>\n<glow:#abc123> & </glow>");
                         ImGui.TableNextColumn();
-                        ImGui.Text($"Change the colour of the tag with full RGB support.\nReplace 'abc123' with any hex colour code.");
+                        ImGui.Text(Loc.T("Change the colour of the tag with full RGB support.\nReplace 'abc123' with any hex colour code."));
                         ImGui.TableNextColumn();
                         ImGui.Text("<icon:#>");
                         ImGui.TableNextColumn();
-                        ImGui.Text($"A supported icon.\nReplace # with the icon number.");
+                        ImGui.Text(Loc.T("A supported icon.\nReplace # with the icon number."));
                         ImGui.EndTable();
                     }
 
@@ -514,10 +514,10 @@ public unsafe class CustomFreeCompanyTags : UiAdjustments.SubTweak {
 
             ImGui.SameLine();
             ImGui.SetCursorPosX((ImGui.GetWindowContentRegionMax().X - 180 * ImGui.GetIO().FontGlobalScale) + ImGui.GetStyle().ItemSpacing.X);
-            ImGui.Checkbox($"Own Line##{GetType().Name}_ownLine_{name}", ref tc.OwnLine);
+            ImGui.Checkbox($"{Loc.T("Own Line")}##{GetType().Name}_ownLine_{name}", ref tc.OwnLine);
             ImGui.SameLine();
             ImGui.SetCursorPosX((ImGui.GetWindowContentRegionMax().X - 80 * ImGui.GetIO().FontGlobalScale) + ImGui.GetStyle().ItemSpacing.X);
-            ImGui.Checkbox($"Hide «»##{GetType().Name}_hideQuotes_{name}", ref tc.HideQuoteMarks);
+            ImGui.Checkbox($"{Loc.T("Hide «»")}##{GetType().Name}_hideQuotes_{name}", ref tc.HideQuoteMarks);
         }
 
         return changeType;

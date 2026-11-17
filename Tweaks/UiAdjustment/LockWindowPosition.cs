@@ -36,8 +36,8 @@ public unsafe class LockWindowPosition : UiAdjustments.SubTweak {
     private string addLockInputText = string.Empty;
 
     protected void DrawConfig(ref bool hasChanged) {
-        ImGui.Text("Manage Locked Windows");
-        ImGui.TextDisabled("You can also manage locked windows through their context menus.");
+        ImGui.Text(Loc.T("Manage Locked Windows"));
+        ImGui.TextDisabled(Loc.T("You can also manage locked windows through their context menus."));
         ImGui.Indent();
 
         hasChanged |= Config.LockedWindows.RemoveWhere((lockedWindow) => {
@@ -64,7 +64,7 @@ public unsafe class LockWindowPosition : UiAdjustments.SubTweak {
         }
 
         ImGui.SameLine();
-        ImGui.InputText("Add Window", ref addLockInputText, 0x20);
+        ImGui.InputText(Loc.T("Add Window"), ref addLockInputText, 0x20);
         ImGui.Unindent();
     }
 

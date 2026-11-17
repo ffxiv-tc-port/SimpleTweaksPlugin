@@ -108,7 +108,7 @@ public unsafe class HideTooltipsInCombat : TooltipTweaks.SubTweak {
         if (!allowEditing) {
             TooltipManager.AddTooltip(addon, &textNode->AtkResNode, $"Setting managed by Simple Tweak:\n  - {LocalizedName}");
             seString.Append(new UIForegroundPayload(500));
-            seString.Append(" (Managed by Simple Tweaks)");
+            seString.Append(Loc.T(" (Managed by Simple Tweaks)"));
             seString.Append(new UIForegroundPayload(0));
         } else {
             TooltipManager.RemoveTooltip(addon, &textNode->AtkResNode);

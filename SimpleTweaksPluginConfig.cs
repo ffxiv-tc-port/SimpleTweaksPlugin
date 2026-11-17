@@ -315,7 +315,7 @@ public partial class SimpleTweaksPluginConfig : IPluginConfiguration {
         }
         
         if (_allTweaks == null || _tweakCategories == null) { 
-            ImGui.TextColored(ImGuiColors.DalamudRed, "The tweak list failed to load. Please report this.");
+            ImGui.TextColored(ImGuiColors.DalamudRed, Loc.T("The tweak list failed to load. Please report this."));
             return;
         }
         
@@ -328,7 +328,7 @@ public partial class SimpleTweaksPluginConfig : IPluginConfiguration {
         var changed = false;
 
         var showbutton = plugin.ErrorList.Count != 0 || Changelog.HasNewChangelog || !HideKofi;
-        var buttonText = plugin.ErrorList.Count > 0 ? $"{plugin.ErrorList.Count} Errors Detected" : Changelog.HasNewChangelog ? "New Changelog Available" : "Support on Ko-fi";
+        var buttonText = plugin.ErrorList.Count > 0 ? Loc.T("{0} Errors Detected", plugin.ErrorList.Count) : Changelog.HasNewChangelog ? Loc.T("New Changelog Available") : Loc.T("Support on Ko-fi");
         var buttonColor = (uint) (plugin.ErrorList.Count > 0 ? 0x000000FF : Changelog.HasNewChangelog ? 0x0011AA05 : 0x005E5BFF);
             
         if (showbutton) {
@@ -337,7 +337,7 @@ public partial class SimpleTweaksPluginConfig : IPluginConfiguration {
             ImGui.SetNextItemWidth(-1);
         }
             
-        ImGui.InputTextWithHint("###tweakSearchInput", "Search...", ref searchInput, 100);
+        ImGui.InputTextWithHint("###tweakSearchInput", Loc.T("Search..."), ref searchInput, 100);
 
         if (showbutton) {
             ImGui.SameLine();
@@ -506,7 +506,7 @@ public partial class SimpleTweaksPluginConfig : IPluginConfiguration {
                     }
                     ImGui.Separator();
 
-                    if (ImGui.CollapsingHeader("Tweak List Display Options", ImGuiTreeNodeFlags.DefaultOpen)) {
+                    if (ImGui.CollapsingHeader(Loc.T("Tweak List Display Options") + "###tweakListDisplayOptions", ImGuiTreeNodeFlags.DefaultOpen)) {
                         ImGui.Indent();
                         if (ImGui.Checkbox(Loc.Localize("General Options / Show Experimental Tweaks", "Show Experimental Tweaks."), ref ShowExperimentalTweaks)) Save();
                         ImGui.Separator();
@@ -545,11 +545,11 @@ public partial class SimpleTweaksPluginConfig : IPluginConfiguration {
                     }
                     ImGui.Separator();
 #endif
-                    if (ImGui.Button("Open Changelog")) {
+                    if (ImGui.Button(Loc.T("Open Changelog") + "###openChangelogButton")) {
                         plugin.ChangelogWindow.IsOpen = true;
                     }
                     ImGui.SameLine();
-                    if (ImGui.CollapsingHeader("Changelog Options", ImGuiTreeNodeFlags.DefaultOpen)) {
+                    if (ImGui.CollapsingHeader(Loc.T("Changelog Options") + "###changelogOptions", ImGuiTreeNodeFlags.DefaultOpen)) {
                         ImGui.Indent();
                         if (ImGui.Checkbox(Loc.Localize("General Options / Auto Open Changelog", "Open New Changelogs Automatically"), ref AutoOpenChangelog)) Save();
                         ImGui.Separator();
@@ -560,7 +560,7 @@ public partial class SimpleTweaksPluginConfig : IPluginConfiguration {
                     ImGui.Separator();
 
 
-                    if (ImGui.CollapsingHeader("Language & Localization", ImGuiTreeNodeFlags.DefaultOpen)) {
+                    if (ImGui.CollapsingHeader(Loc.T("Language & Localization") + "###languageAndLocalization", ImGuiTreeNodeFlags.DefaultOpen)) {
                         ImGui.Indent();
                         
                         if (Loc.DownloadError != null) {
@@ -568,13 +568,19 @@ public partial class SimpleTweaksPluginConfig : IPluginConfiguration {
                         }
 
                         if (Loc.LoadingTranslations) {
-                            ImGui.Text("Downloading Translations...");
+                            ImGui.Text(Loc.T("Downloading Translations..."));
                         } else {
                             ImGui.SetNextItemWidth(130);
                             if (ImGui.BeginCombo(Loc.Localize("General Options / Language", "Language"), plugin.PluginConfig.Language)) {
 
                                 if (ImGui.Selectable("en", Language == "en")) {
                                     Language = "en";
+                                    plugin.SetupLocalization();
+                                    Save();
+                                }
+
+                                if (ImGui.Selectable(Loc.BuiltInLanguage + "##builtInLanguageSelection", Language == Loc.BuiltInLanguage)) {
+                                    Language = Loc.BuiltInLanguage;
                                     plugin.SetupLocalization();
                                     Save();
                                 }
@@ -603,7 +609,7 @@ public partial class SimpleTweaksPluginConfig : IPluginConfiguration {
 
                             ImGui.SameLine();
 
-                            if (ImGui.SmallButton("Update Translations")) {
+                            if (ImGui.SmallButton(Loc.T("Update Translations") + "###updateTranslationsButton")) {
 #if DEBUG
                                 if (ImGui.GetIO().KeyAlt) {
                                     LanguageUpdates.Clear();
@@ -664,7 +670,7 @@ public partial class SimpleTweaksPluginConfig : IPluginConfiguration {
                             ImGui.EndCombo();
                         }
                         ImGui.SameLine();
-                        ImGui.TextDisabled("Changes number formatting, not all tweaks support this.");
+                        ImGui.TextDisabled(Loc.T("Changes number formatting, not all tweaks support this."));
                         ImGui.Unindent();
                     }
                     
@@ -675,10 +681,10 @@ public partial class SimpleTweaksPluginConfig : IPluginConfiguration {
 
                     var toggleableTweakManagers = plugin.Tweaks.Where(t => t is SubTweakManager { AlwaysEnabled: false }).Cast<SubTweakManager>().ToList();
                     if (toggleableTweakManagers.Count > 0) {
-                        if (ImGui.CollapsingHeader($"Tweak Managers ({toggleableTweakManagers.Count(stm => stm.Enabled)}/{toggleableTweakManagers.Count} Enabled)###toggleableTweakManagers")) {
+                        if (ImGui.CollapsingHeader($"{Loc.T("Tweak Managers ({0}/{1} Enabled)", toggleableTweakManagers.Count(stm => stm.Enabled), toggleableTweakManagers.Count)}###toggleableTweakManagers")) {
                             
                             ImGui.Indent();
-                            ImGuiExt.TextWrappedDisabled("Tweak managers contain additional tweaks. If the manager is disabled all tweaks it contains will also be disabled until the manager is enabled again.");
+                            ImGuiExt.TextWrappedDisabled(Loc.T("Tweak managers contain additional tweaks. If the manager is disabled all tweaks it contains will also be disabled until the manager is enabled again."));
                             ImGui.Separator();
                             
                             foreach (var t in plugin.Tweaks.Where(t => t is SubTweakManager).Cast<SubTweakManager>()) {
@@ -708,7 +714,7 @@ public partial class SimpleTweaksPluginConfig : IPluginConfiguration {
                                     Save();
                                 }
                                 ImGui.SameLine();
-                                ImGui.TreeNodeEx($"Enable Tweak Manager: {t.LocalizedName}", ImGuiTreeNodeFlags.Bullet | ImGuiTreeNodeFlags.NoTreePushOnOpen);
+                                ImGui.TreeNodeEx(Loc.T("Enable Tweak Manager: {0}", t.LocalizedName), ImGuiTreeNodeFlags.Bullet | ImGuiTreeNodeFlags.NoTreePushOnOpen);
                                 ImGui.Separator();
                             }
                             
@@ -721,7 +727,7 @@ public partial class SimpleTweaksPluginConfig : IPluginConfiguration {
                     
 
                     if (HiddenTweaks.Count > 0) {
-                        if (ImGui.CollapsingHeader($"Hidden Tweaks ({HiddenTweaks.Count})###hiddenTweaks")) {
+                        if (ImGui.CollapsingHeader($"{Loc.T("Hidden Tweaks ({0})", HiddenTweaks.Count)}###hiddenTweaks")) {
                             ImGui.Indent();
                             string removeKey = null;
                             foreach (var hidden in HiddenTweaks) {
@@ -756,9 +762,9 @@ public partial class SimpleTweaksPluginConfig : IPluginConfiguration {
 
                     if (CustomTweakProviders.Count > 0 || ShowExperimentalTweaks) {
 
-                        if (ImGui.CollapsingHeader($"Tweak Providers ({CustomTweakProviders.Count(p => p.Enabled)}/{CustomTweakProviders.Count} Enabled)###tweakProviders")) {
+                        if (ImGui.CollapsingHeader($"{Loc.T("Tweak Providers ({0}/{1} Enabled)", CustomTweakProviders.Count(p => p.Enabled), CustomTweakProviders.Count)}###tweakProviders")) {
                             ImGui.Indent();
-                            ImGuiExt.TextWrappedDisabled("Tweak providers allow for loading tweaks from other sources. Only use providers created by someone you trust.");
+                            ImGuiExt.TextWrappedDisabled(Loc.T("Tweak providers allow for loading tweaks from other sources. Only use providers created by someone you trust."));
                             CustomTweakProviderConfig? deleteCustomProvider = null;
                             for (var i = 0; i < CustomTweakProviders.Count; i++) {
                                 if (ImGui.Button($"X##deleteCustomProvider_{i}")) {
@@ -825,7 +831,7 @@ public partial class SimpleTweaksPluginConfig : IPluginConfiguration {
                             }
 
                             ImGui.SameLine();
-                            ImGui.InputTextWithHint("##addCustomProviderInput", "File path to tweak provider DLL", ref addCustomProviderInput, 500);
+                            ImGui.InputTextWithHint("##addCustomProviderInput", Loc.T("File path to tweak provider DLL"), ref addCustomProviderInput, 500);
                             ImGui.Unindent();
                         }
                     }

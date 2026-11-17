@@ -50,14 +50,14 @@ public unsafe class TrackFadedRolls : TooltipTweaks.SubTweak {
             description.Payloads.Add(RawPayload.LinkTerminator);
             
             description.Payloads.Add(new NewLinePayload());
-            description.Payloads.Add(new TextPayload("Craftable Orchestrion Rolls"));
+            description.Payloads.Add(new TextPayload(Loc.T("Craftable Orchestrion Rolls")));
             
             foreach (var craftedRoll in craftResults) {
                 var isRollUnlocked = UIState.Instance()->PlayerState.IsOrchestrionRollUnlocked(craftedRoll.AdditionalData.RowId);
                 
                 description.Payloads.Add(new NewLinePayload());
                 description.Payloads.Add(new UIForegroundPayload((ushort)(isRollUnlocked ? 45 : 14)));
-                description.Payloads.Add(new TextPayload($"    {craftedRoll.Name} (Acquired: {(isRollUnlocked ? "Yes" : "No")})"));
+                description.Payloads.Add(new TextPayload(Loc.T("    {0} (Acquired: {1})", craftedRoll.Name, isRollUnlocked ? Loc.T("Yes") : Loc.T("No"))));
                 description.Payloads.Add(new UIForegroundPayload(0));
             }
             

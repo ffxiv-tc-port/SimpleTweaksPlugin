@@ -28,9 +28,9 @@ public class HideAchievementsNotifications : UiAdjustments.SubTweak {
             ImGui.Indent();
             ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudOrange);
 
-            ImGui.TextWrapped("The game option 'Display achievements nearing completion as login notification' should be enabled to completely hide the on-login achievement reccomendations. It is currently disabled.");
+            ImGui.TextWrapped(Loc.T("The game option 'Display achievements nearing completion as login notification' should be enabled to completely hide the on-login achievement reccomendations. It is currently disabled."));
             ImGui.PopStyleColor();
-            if (ImGui.Button("Enable It")) {
+            if (ImGui.Button(Loc.T("Enable It"))) {
                 Service.GameConfig.Set(UiConfigOption.AchievementAppealLoginDisp, true);
             }
 

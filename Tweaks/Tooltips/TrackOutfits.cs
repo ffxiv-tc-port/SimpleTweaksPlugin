@@ -56,7 +56,7 @@ public unsafe class TrackOutfits : TooltipTweaks.SubTweak
             description.Payloads.Add(RawPayload.LinkTerminator);
 
             description.Payloads.Add(new NewLinePayload());
-            description.Payloads.Add(new TextPayload("Outfits"));
+            description.Payloads.Add(new TextPayload(Loc.T("Outfits")));
 
             foreach (var outfit in outfits)
             {
@@ -64,7 +64,7 @@ public unsafe class TrackOutfits : TooltipTweaks.SubTweak
 
                 description.Payloads.Add(new NewLinePayload());
                 description.Payloads.Add(new UIForegroundPayload((ushort)(isOutfitOwned ? 45 : 14)));
-                description.Payloads.Add(new TextPayload($"    {Service.Data.GetExcelSheet<Item>().GetRow(outfit).Name} (Acquired: {(isOutfitOwned ? "Yes" : "No")})"));
+                description.Payloads.Add(new TextPayload(Loc.T("    {0} (Acquired: {1})", Service.Data.GetExcelSheet<Item>().GetRow(outfit).Name, isOutfitOwned ? Loc.T("Yes") : Loc.T("No"))));
                 description.Payloads.Add(new UIForegroundPayload(0));
             }
 

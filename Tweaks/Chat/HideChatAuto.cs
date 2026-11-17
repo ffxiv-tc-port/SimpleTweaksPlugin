@@ -28,12 +28,12 @@ public unsafe class HideChatAuto : ChatTweaks.SubTweak {
     private readonly string[] chatLogNodeNames = ["ChatLog", "ChatLogPanel_0", "ChatLogPanel_1", "ChatLogPanel_2", "ChatLogPanel_3"];
 
     protected void DrawConfig(ref bool hasChanged) {
-        hasChanged |= ImGui.Checkbox("Everywhere", ref Config.Everywhere);
+        hasChanged |= ImGui.Checkbox(Loc.T("Everywhere"), ref Config.Everywhere);
 
         if (Config.Everywhere) ImGui.BeginDisabled();
-        hasChanged |= ImGui.Checkbox("In Instance", ref Config.InInstance);
-        hasChanged |= ImGui.Checkbox("In Battle", ref Config.InCombat);
-        hasChanged |= ImGui.Checkbox("In Cutscenes", ref Config.InCutscene);
+        hasChanged |= ImGui.Checkbox(Loc.T("In Instance"), ref Config.InInstance);
+        hasChanged |= ImGui.Checkbox(Loc.T("In Battle"), ref Config.InCombat);
+        hasChanged |= ImGui.Checkbox(Loc.T("In Cutscenes"), ref Config.InCutscene);
         if (Config.Everywhere) ImGui.EndDisabled();
 
         if (hasChanged) {

@@ -56,7 +56,7 @@ public unsafe class NoSellList : Tweak {
                     ImGui.TableNextColumn();
 
                     if (ImGui.GetIO().KeyShift) {
-                        if (ImGui.Button("Import Clipboard")) {
+                        if (ImGui.Button(Loc.T("Import Clipboard"))) {
                             var lines = ImGui.GetClipboardText().Split('\n').Select(l => l.Trim()).ToArray();
                             var teamcraftRegex = new Regex(@"^(\d+)x (.*)$");
                             foreach (var l in lines) {
@@ -76,10 +76,10 @@ public unsafe class NoSellList : Tweak {
                         }
 
                         if (ImGui.IsItemHovered()) {
-                            ImGui.SetTooltip("Loads list of items from clipboard. One item per line, supports Teamcraft item list format.");
+                            ImGui.SetTooltip(Loc.T("Loads list of items from clipboard. One item per line, supports Teamcraft item list format."));
                         }
                     } else {
-                        if (ImGui.Button("Add Item") && !string.IsNullOrWhiteSpace(inputNewItemName)) {
+                        if (ImGui.Button(Loc.T("Add Item")) && !string.IsNullOrWhiteSpace(inputNewItemName)) {
                             addItemError = string.Empty;
                             var idValid = uint.TryParse(inputNewItemName, out var id);
 
@@ -115,7 +115,7 @@ public unsafe class NoSellList : Tweak {
                         ImGui.Text($"[{item.RowId}] {item.Name.ExtractText()}");
                         ImGui.TableNextColumn();
                         ImGui.SetNextItemWidth(-1);
-                        if (ImGui.Button($"Add##addItem{item}")) {
+                        if (ImGui.Button($"{Loc.T("Add")}##addItem{item}")) {
                             clickedMatch = true;
                             itemList.Add(item.RowId);
                             changed = true;
@@ -134,7 +134,7 @@ public unsafe class NoSellList : Tweak {
                         ImGui.Text($"[{itemInfo.Value.RowId}] {itemInfo.Value.Name.ExtractText()}");
                         ImGui.TableNextColumn();
                         ImGui.SetNextItemWidth(-1);
-                        if (ImGui.Button($"Remove##removeItem{item}")) removeId = item;
+                        if (ImGui.Button($"{Loc.T("Remove")}##removeItem{item}")) removeId = item;
                     }
 
                     if (itemList.Contains(removeId)) {
@@ -151,9 +151,9 @@ public unsafe class NoSellList : Tweak {
             return changed;
         }
 
-        ImGui.Text("Locked Items:");
+        ImGui.Text(Loc.T("Locked Items:"));
         if (ImGui.BeginTabBar("noSellListTabs")) {
-            if (ImGui.BeginTabItem("Default List")) {
+            if (ImGui.BeginTabItem(Loc.T("Default List"))) {
                 hasChanged |= ShowList(Config.NoSellList);
                 ImGui.EndTabItem();
             }
@@ -176,7 +176,7 @@ public unsafe class NoSellList : Tweak {
                     ImGui.SameLine();
                     ImGui.InputText($"###name_{cl.Id}", ref cl.Name, 32);
                     ImGui.SameLine();
-                    if (ImGui.Button($"Delete List##{cl.Id}") && ImGui.GetIO().KeyShift) {
+                    if (ImGui.Button($"{Loc.T("Delete List")}##{cl.Id}") && ImGui.GetIO().KeyShift) {
                         Config.CustomLists.Remove(cl);
                         ImGui.EndTabItem();
                         ImGui.PopID();
@@ -185,7 +185,7 @@ public unsafe class NoSellList : Tweak {
                     }
 
                     if (ImGui.IsItemHovered() && !ImGui.GetIO().KeyShift) {
-                        ImGui.SetTooltip("Hold SHIFT to confirm delete.");
+                        ImGui.SetTooltip(Loc.T("Hold SHIFT to confirm delete."));
                     }
 
                     hasChanged |= ShowList(cl.NoSellList);
@@ -224,7 +224,7 @@ public unsafe class NoSellList : Tweak {
                         var item = Service.Data.Excel.GetSheet<Item>().GetRowOrDefault(slot->ItemId);
                         if (item == null) return false;
                         if (!string.IsNullOrEmpty(item.Value.Name.ExtractText())) {
-                            Service.Toasts.ShowError(new SeString(new TextPayload(item.Value.Name.ExtractText()), new TextPayload(" is locked by "), new TextPayload(customListMatch.Name), new NewLinePayload(), new TextPayload(Name), new TextPayload(" in "), new TextPayload(Plugin.Name), new TextPayload(".")));
+                            Service.Toasts.ShowError(new SeString(new TextPayload(item.Value.Name.ExtractText()), new TextPayload(Loc.T(" is locked by ")), new TextPayload(customListMatch.Name), new NewLinePayload(), new TextPayload(Name), new TextPayload(Loc.T(" in ")), new TextPayload(Plugin.Name), new TextPayload(".")));
                             return false;
                         }
                     }

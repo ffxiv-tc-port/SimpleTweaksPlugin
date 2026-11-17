@@ -21,12 +21,17 @@ public class LocalizedString {
 }
 
 internal static class Loc {
-    private static SortedDictionary<string, LocalizedString> _localizationStrings = new();
+    private static SortedDictionary<string, LocalizedString> _localizationStrings = NewStore();
+
+    private static SortedDictionary<string, LocalizedString> NewStore(IDictionary<string, LocalizedString> source = null) => source == null ? new(StringComparer.Ordinal) : new(source, StringComparer.Ordinal);
+
+    private static SortedDictionary<string, LocalizedString> ParseStore(string json) => NewStore(JsonConvert.DeserializeObject<Dictionary<string, LocalizedString>>(json));
     private static string currentLanguage = "en";
+    internal const string BuiltInLanguage = "zh-TW";
 
     internal static void LoadLanguage(string langCode) {
         currentLanguage = "en";
-        _localizationStrings = new SortedDictionary<string, LocalizedString>();
+        _localizationStrings = NewStore();
         if (langCode == "en") return;
         if (langCode == "DEBUG") {
             currentLanguage = "DEBUG";
@@ -34,6 +39,15 @@ internal static class Loc {
         }
 
         string json = null;
+        if (langCode == BuiltInLanguage) {
+            using var builtIn = Assembly.GetExecutingAssembly().GetManifestResourceStream($"SimpleTweaksPlugin.Localization.{langCode}.json");
+            if (builtIn == null) return;
+            using var builtInReader = new StreamReader(builtIn);
+            _localizationStrings = ParseStore(builtInReader.ReadToEnd());
+            currentLanguage = langCode;
+            return;
+        }
+
         var locDir = Service.PluginInterface.GetPluginLocDirectory();
         if (string.IsNullOrWhiteSpace(locDir)) return;
 
@@ -52,22 +66,28 @@ internal static class Loc {
         }
 
         if (!string.IsNullOrWhiteSpace(json)) {
-            _localizationStrings = JsonConvert.DeserializeObject<SortedDictionary<string, LocalizedString>>(json);
+            _localizationStrings = ParseStore(json);
             currentLanguage = langCode;
         }
     }
 
     internal static string Localize(string key, string fallbackValue, string description = null) {
         if (currentLanguage == "DEBUG") return $"#{key}#";
-        try {
-            return _localizationStrings[key].Message;
-        } catch {
+        if (_localizationStrings.TryGetValue(key, out var found) && found?.Message != null) return found.Message;
+        _localizationStrings[key] = new LocalizedString() {
+            Message = fallbackValue,
+            Description = description ?? $"{key} - {fallbackValue}"
+        };
+        return fallbackValue;
+    }
 
-            _localizationStrings[key] = new LocalizedString() {
-                Message = fallbackValue,
-                Description = description ?? $"{key} - {fallbackValue}"
-            };
-            return fallbackValue;
+    internal static string T(string english) => Localize($"Text / {english}", english);
+
+    internal static string T(string english, params object[] args) {
+        try {
+            return string.Format(Localize($"Text / {english}", english), args);
+        } catch (FormatException) {
+            return string.Format(english, args);
         }
     }
 
@@ -77,7 +97,7 @@ internal static class Loc {
 
     internal static void ImportDictionary(string json) {
         try {
-            _localizationStrings = JsonConvert.DeserializeObject<SortedDictionary<string, LocalizedString>>(json);
+            _localizationStrings = ParseStore(json);
         } catch {
             //
         }
@@ -108,7 +128,7 @@ internal static class Loc {
 
 
                 if (DateTime.Now - config.LanguageListUpdate > TimeSpan.FromMinutes(60) || force) {
-                    Service.NotificationManager.AddNotification(new Notification() { Content = "Updating Language List", Minimized = true, InitialDuration = TimeSpan.FromSeconds(4)});
+                    Service.NotificationManager.AddNotification(new Notification() { Content = T("Updating Language List"), Minimized = true, InitialDuration = TimeSpan.FromSeconds(4)});
                     var manifestJson = await httpClient.GetStringAsync("https://distributions.crowdin.net/a20076cbde84bba34152668i8hw/manifest.json");
                     var manifest = JsonConvert.DeserializeObject<CrowdinManifest>(manifestJson);
                     foreach (var l in manifest.Languages) {
@@ -122,7 +142,7 @@ internal static class Loc {
 
                 if (config.LanguageUpdates.TryGetValue(config.Language, out var updateTime)) {
                     if (DateTime.Now - updateTime > TimeSpan.FromMinutes(60) || force) {
-                        Service.NotificationManager.AddNotification(new Notification() { Content = $"Updating Language: {config.Language}", Minimized = true, InitialDuration = TimeSpan.FromSeconds(4)});
+                        Service.NotificationManager.AddNotification(new Notification() { Content = T("Updating Language: {0}", config.Language), Minimized = true, InitialDuration = TimeSpan.FromSeconds(4)});
                         var languageJson = await httpClient.GetStringAsync($"https://distributions.crowdin.net/a20076cbde84bba34152668i8hw/content/{config.Language}/strings.json");
                         var savePath = Path.Join(downloadPath, config.Language, "strings.json");
 

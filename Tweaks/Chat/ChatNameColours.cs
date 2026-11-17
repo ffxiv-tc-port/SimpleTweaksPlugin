@@ -211,7 +211,7 @@ public class ChatNameColours : ChatTweaks.SubTweak {
 
                     ImGui.SameLine();
                     if (fc.Glow == null) {
-                        if (ImGui.SmallButton($"add glow##addGlow_{fc.PlayerName}@{fc.WorldName}")) {
+                        if (ImGui.SmallButton($"{Loc.T("add glow")}##addGlow_{fc.PlayerName}@{fc.WorldName}")) {
                             fc.Glow = Vector3.One;
                         }
                     } else {
@@ -221,7 +221,7 @@ public class ChatNameColours : ChatTweaks.SubTweak {
                         }
 
                         ImGui.SameLine();
-                        if (ImGui.SmallButton($"remove glow##removeGlow_{fc.PlayerName}@{fc.WorldName}")) {
+                        if (ImGui.SmallButton($"{Loc.T("remove glow")}##removeGlow_{fc.PlayerName}@{fc.WorldName}")) {
                             fc.Glow = null;
                         }
                     }
@@ -307,7 +307,7 @@ public class ChatNameColours : ChatTweaks.SubTweak {
                 if (target is IPlayerCharacter pc && !Config.ForcedColours.Any(f => f.PlayerName == pc.Name.TextValue && f.WorldName == pc.HomeWorld.Value.Name.ExtractText())) {
                     ImGui.TableNextColumn();
                     ImGui.TableNextColumn();
-                    if (ImGui.Button($"Add {pc.Name.TextValue}")) {
+                    if (ImGui.Button(Loc.T("Add {0}", pc.Name.TextValue))) {
                         var colourKey = GetColourKey(pc.Name.TextValue, pc.HomeWorld.Value.Name.ExtractText(), true) ?? 0;
                         Config.ForcedColours.Add(new ForcedColour() {
                             PlayerName = pc.Name.TextValue, WorldName = pc.HomeWorld.Value.Name.ExtractText(), ColourKey = colourKey, Color = Config.LegacyColours || ImGui.GetIO().KeyShift ? LegacyToNew(colourKey) : GetColor(pc.Name.TextValue, pc.HomeWorld.Value.Name.ExtractText(), true) ?? Vector3.One,
@@ -320,7 +320,7 @@ public class ChatNameColours : ChatTweaks.SubTweak {
             ImGui.EndTable();
         }
 
-        if (ImGui.CollapsingHeader("Chat Channel Config")) {
+        if (ImGui.CollapsingHeader(Loc.T("Chat Channel Config"))) {
             if (ImGui.BeginTable("chatChannelConfig", 3)) {
                 ImGui.TableSetupColumn("Channel");
                 ImGui.TableSetupColumn("Colour Sender Name");
@@ -363,7 +363,7 @@ public class ChatNameColours : ChatTweaks.SubTweak {
         ImGui.TableNextRow();
         ImGui.TableNextColumn();
         if (type == None) {
-            ImGui.TextDisabled("All Other Channels");
+            ImGui.TextDisabled(Loc.T("All Other Channels"));
         } else {
             if (ImGuiComponents.IconButton($"##{type}_delete", FontAwesomeIcon.Trash)) {
                 config = null;

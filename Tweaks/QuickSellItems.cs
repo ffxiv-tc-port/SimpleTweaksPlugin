@@ -34,7 +34,7 @@ public unsafe class QuickSellItems : Tweak {
     [TweakConfig] public Configs Config { get; private set; }
 
     protected void DrawConfig() {
-        ImGui.Text("Modifier Keys to Auto Sell:");
+        ImGui.Text(Loc.T("Modifier Keys to Auto Sell:"));
         ImGui.Spacing();
         using (ImRaii.PushIndent()) {
             using (ImRaii.Group()) {
@@ -58,16 +58,16 @@ public unsafe class QuickSellItems : Tweak {
 
                 if (!(Config.Shift || Config.Ctrl || Config.Alt)) {
                     ImGui.PushStyleColor(ImGuiCol.Text, 0xFF3333DD);
-                    ImGui.Text("  At least one modifier key must be enabled.");
+                    ImGui.Text(Loc.T("  At least one modifier key must be enabled."));
                     ImGui.PopStyleColor();
                 }
             }
         }
         
-        ImGui.Checkbox("Enable Quick Sell from retainer inventory", ref Config.RetainerSell);
-        ImGui.Checkbox("Enable Quick Sell from player inventory at retainer", ref Config.SellAtRetainer);
+        ImGui.Checkbox(Loc.T("Enable Quick Sell from retainer inventory"), ref Config.RetainerSell);
+        ImGui.Checkbox(Loc.T("Enable Quick Sell from player inventory at retainer"), ref Config.SellAtRetainer);
         ImGui.Spacing();
-        ImGui.Text("You may still receive a prompt to confirm for some items.\nThis can be disabled in the Character Configuration.");
+        ImGui.Text(Loc.T("You may still receive a prompt to confirm for some items.\nThis can be disabled in the Character Configuration."));
     }
 
     public InventoryType[] CanSellFrom = [InventoryType.Inventory1, InventoryType.Inventory2, InventoryType.Inventory3, InventoryType.Inventory4, InventoryType.ArmoryMainHand, InventoryType.ArmoryHead, InventoryType.ArmoryBody, InventoryType.ArmoryHands, InventoryType.ArmoryLegs, InventoryType.ArmoryFeets, InventoryType.ArmoryEar, InventoryType.ArmoryNeck, InventoryType.ArmoryWrist, InventoryType.ArmoryRings, InventoryType.ArmoryOffHand];

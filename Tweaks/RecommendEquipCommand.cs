@@ -9,7 +9,7 @@ namespace SimpleTweaksPlugin.Tweaks;
 [TweakName("Equip Recommended Command")]
 [TweakDescription("Adds a command to equip recommended gear.")]
 public unsafe class RecommendEquipCommand : CommandTweak {
-    protected override string HelpMessage => "Equips recommended gear.";
+    protected override string HelpMessage => Loc.T("Equips recommended gear.");
     protected override string Command => "equiprecommended";
     private static RecommendEquipModule* Module => Framework.Instance()->GetUIModule()->GetRecommendEquipModule();
 

@@ -14,7 +14,7 @@ namespace SimpleTweaksPlugin.Tweaks;
 [TweakAuthor("nebel")]
 [TweakReleaseVersion("1.9.7.0")]
 public unsafe class UseCollectionCommand : CommandTweak {
-    protected override string HelpMessage => "Use a Collection item by name or ID. Use without parameters to list available items and IDs.";
+    protected override string HelpMessage => Loc.T("Use a Collection item by name or ID. Use without parameters to list available items and IDs.");
     protected override string Command => "usecollection";
 
     private static readonly Dictionary<string, uint> McGuffin = Service.Data.GetExcelSheet<McGuffin>()!

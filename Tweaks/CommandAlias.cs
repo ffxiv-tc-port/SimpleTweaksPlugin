@@ -68,7 +68,7 @@ public class CommandAlias : Tweak {
         ImGui.NextColumn();
         ImGui.Text(LocString("Alt\nMode"));
         if (ImGui.IsItemHovered()) {
-            ImGui.SetTooltip("Use an alternative method to send the alias.");
+            ImGui.SetTooltip(Loc.T("Use an alternative method to send the alias."));
         }
         ImGui.NextColumn();
         ImGui.NextColumn();
@@ -83,7 +83,7 @@ public class CommandAlias : Tweak {
             if (aliasEntry.IsValid()) {
                 change = ImGui.Checkbox($"###aliasToggle{aliasEntry.UniqueId}", ref aliasEntry.Enabled) || change;
             } else {
-                ImGui.Text("Invalid");
+                ImGui.Text(Loc.T("Invalid"));
             }
 
             ImGui.NextColumn();

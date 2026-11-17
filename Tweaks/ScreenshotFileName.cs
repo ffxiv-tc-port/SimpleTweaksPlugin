@@ -27,13 +27,13 @@ public unsafe class ScreenshotFileName : Tweak {
     [TweakConfig] public Configs Config { get; private set; }
 
     protected void DrawConfig() {
-        ImGui.InputText("Format", ref Config.DateFormatString, 512);
+        ImGui.InputText(Loc.T("Format"), ref Config.DateFormatString, 512);
 
         using (ImRaii.PushColor(ImGuiCol.Text, ImGui.GetColorU32(ImGuiCol.TextDisabled))) {
             ImGui.TextUnformatted(GetScreenshotName());
         }
 
-        if (!ImGui.CollapsingHeader("Placeholders")) return;
+        if (!ImGui.CollapsingHeader(Loc.T("Placeholders"))) return;
         if (ImGui.BeginTable("Placeholders", 3, ImGuiTableFlags.Borders | ImGuiTableFlags.Resizable | ImGuiTableFlags.NoSavedSettings)) {
             ImGui.TableSetupColumn("Placeholder", ImGuiTableColumnFlags.WidthFixed, 80 * ImGui.GetIO().FontGlobalScale);
             ImGui.TableSetupColumn("Value", ImGuiTableColumnFlags.WidthFixed, 140 * ImGui.GetIO().FontGlobalScale);
@@ -43,7 +43,7 @@ public unsafe class ScreenshotFileName : Tweak {
                 ImGui.TableNextColumn();
                 ImGui.TextUnformatted($"%{ph.Placeholder}");
                 if (ImGui.IsItemClicked()) ImGui.SetClipboardText($"%{ph.Placeholder}");
-                if (ImGui.IsItemHovered()) ImGui.SetTooltip("Click to Copy");
+                if (ImGui.IsItemHovered()) ImGui.SetTooltip(Loc.T("Click to Copy"));
                 ImGui.TableNextColumn();
                 ImGui.TextUnformatted($"{ph.GetValue()}");
                 ImGui.TableNextColumn();

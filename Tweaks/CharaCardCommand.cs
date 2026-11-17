@@ -12,7 +12,7 @@ namespace SimpleTweaksPlugin.Tweaks;
 [TweakDescription("Adds a command to open adventurer plates.")]
 public unsafe class CharaCardCommand : CommandTweak {
     protected override string Command => "playerplate";
-    protected override string HelpMessage => "Opens the character card for the selected character.";
+    protected override string HelpMessage => Loc.T("Opens the character card for the selected character.");
 
     protected override void OnCommand(string arguments) {
         if (string.IsNullOrWhiteSpace(arguments)) {

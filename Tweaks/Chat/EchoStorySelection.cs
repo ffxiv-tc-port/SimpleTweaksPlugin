@@ -37,7 +37,7 @@ public unsafe class EchoStorySelection : ChatTweaks.SubTweak {
     private string newIgnoredMessageString = string.Empty;
 
     protected void DrawConfig() {
-        if (!ImGui.CollapsingHeader($"Hidden Choices ({TweakConfig.IgnoredMessages.Count})###HiddenMessages_{nameof(EchoStorySelection)}")) return;
+        if (!ImGui.CollapsingHeader($"{Loc.T("Hidden Choices ({0})", TweakConfig.IgnoredMessages.Count)}###HiddenMessages_{nameof(EchoStorySelection)}")) return;
         using (ImRaii.PushIndent()) {
             for (var i = 0; i < TweakConfig.IgnoredMessages.Count; i++) {
                 using (ImRaii.PushId($"ignoredMessage_{i}")) {

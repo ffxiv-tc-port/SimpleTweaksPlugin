@@ -45,7 +45,7 @@ public unsafe class ExtendedDesynthesisWindow : UiAdjustments.SubTweak {
         ImGui.Checkbox(LocString("YellowForSkillGain", "Highlight potential skill gains (Yellow)"), ref Config.YellowForSkillGain);
         ImGui.Checkbox(LocString("DesynthesisDelta", "Show desynthesis delta"), ref Config.Delta);
 
-        ImGui.TextDisabled("The 'Show All Items' option is currently removed.");
+        ImGui.TextDisabled(Loc.T("The 'Show All Items' option is currently removed."));
     }
     
     private delegate nint UpdateItemDelegate(nint a1, uint index, nint a3, AtkComponentBase* listItemRenderer);

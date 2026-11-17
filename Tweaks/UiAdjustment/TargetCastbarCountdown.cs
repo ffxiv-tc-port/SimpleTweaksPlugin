@@ -57,7 +57,7 @@ public unsafe class TargetCastbarCountdown : UiAdjustments.SubTweak {
     }
 
     private void DrawConfig() {
-        var rebuild = ImGui.Checkbox("Enable Primary Target", ref TweakConfig.PrimaryTargetEnabled);
+        var rebuild = ImGui.Checkbox(Loc.T("Enable Primary Target"), ref TweakConfig.PrimaryTargetEnabled);
         var hasChanged = false;
         if (TweakConfig.PrimaryTargetEnabled) {
             using (ImRaii.PushIndent()) {
@@ -65,11 +65,11 @@ public unsafe class TargetCastbarCountdown : UiAdjustments.SubTweak {
                 ImGui.SetNextItemWidth(250 * ImGuiHelpers.GlobalScale);
                 hasChanged |= ImGui.DragFloat2("Position Offset##primary", ref TweakConfig.Offset);
                 ImGui.SetNextItemWidth(250 * ImGuiHelpers.GlobalScale);
-                hasChanged |= ImGui.SliderInt("Font Size##primary", ref TweakConfig.FontSize, 8, 30);
+                hasChanged |= ImGui.SliderInt(Loc.T("Font Size") + "##primary", ref TweakConfig.FontSize, 8, 30);
             }
         }
         
-        rebuild |= ImGui.Checkbox("Enable Focus Target", ref TweakConfig.FocusTargetEnabled);
+        rebuild |= ImGui.Checkbox(Loc.T("Enable Focus Target"), ref TweakConfig.FocusTargetEnabled);
         
         if (TweakConfig.FocusTargetEnabled) {
             using (ImRaii.PushIndent()) {
@@ -77,7 +77,7 @@ public unsafe class TargetCastbarCountdown : UiAdjustments.SubTweak {
                 ImGui.SetNextItemWidth(250 * ImGuiHelpers.GlobalScale);
                 hasChanged |= ImGui.DragFloat2("Position Offset##focus", ref TweakConfig.FocusOffset);
                 ImGui.SetNextItemWidth(250 * ImGuiHelpers.GlobalScale);
-                hasChanged |= ImGui.SliderInt("Font Size##focus", ref TweakConfig.FocusFontSize, 8, 30);
+                hasChanged |= ImGui.SliderInt(Loc.T("Font Size") + "##focus", ref TweakConfig.FocusFontSize, 8, 30);
             }
         }
 

@@ -26,7 +26,7 @@ public unsafe class KeepOpen : Tweak {
     public Configs Config { get; private set; }
 
     protected void DrawConfig(ref bool hasChanged) {
-        ImGui.TextWrapped("Windows to keep open when accessing retainers, shops or market board:");
+        ImGui.TextWrapped(Loc.T("Windows to keep open when accessing retainers, shops or market board:"));
         foreach (var (internalName, displayName) in windows) {
             var enabled = Config.EnabledWindows.Contains(internalName);
 

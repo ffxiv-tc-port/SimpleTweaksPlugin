@@ -113,7 +113,7 @@ public unsafe class DisableClickTargeting : Tweak {
                 ImGui.TableNextColumn();
                 var target = Service.Targets.SoftTarget ?? Service.Targets.Target;
                 if (target != null) {
-                    if (ImGui.Button("Target")) {
+                    if (ImGui.Button(Loc.T("Target"))) {
                         nameFilterNew = target.Name.TextValue;
                     }
                 }

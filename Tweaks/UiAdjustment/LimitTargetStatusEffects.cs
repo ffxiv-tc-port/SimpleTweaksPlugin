@@ -60,7 +60,7 @@ namespace SimpleTweaksPlugin.Tweaks.UiAdjustment {
         protected void DrawConfig(ref bool hasChanged) {
             statusSheet ??= Service.Data.GetExcelSheet<Lumina.Excel.Sheets.Status>().ToDictionary(row => (ushort)row.RowId, row => row);
 
-            ImGui.Text("Limiting:");
+            ImGui.Text(Loc.T("Limiting:"));
             ImGui.SetNextItemWidth(100 * ImGui.GetIO().FontGlobalScale);
             if (ImGui.InputInt(LocString("NbStatusEffects", "Number of status effects displayed (default 30)##nbStatusEffectsDisplayed"), ref Config.NbStatusEffects, 1)) {
                 hasChanged = true;
@@ -74,7 +74,7 @@ namespace SimpleTweaksPlugin.Tweaks.UiAdjustment {
             hasChanged |= ImGui.Checkbox(LocString("LimitOnlyInCombat", "Only limit in combat##LimitOnlyInCombat"), ref Config.LimitOnlyInCombat);
 
             ImGui.Separator();
-            ImGui.Text("Filtering:");
+            ImGui.Text(Loc.T("Filtering:"));
             ImGui.TextColored(ImGuiColors.DalamudGrey, "Note: Your status effects will never be filtered and the filtering is disabled in PvP and on you.");
             hasChanged |= ImGui.Checkbox(LocString("FilterOnlyInCombat", "Only filter in combat##FilterOnlyInCombat"), ref Config.FilterOnlyInCombat);
             hasChanged |= ImGui.Checkbox(LocString("FilterTarget", "Filter target##FilterTarget"), ref Config.FilterTarget);
@@ -84,17 +84,17 @@ namespace SimpleTweaksPlugin.Tweaks.UiAdjustment {
             ImGui.SameLine();
             ImGui.TextColored(ImGuiColors.DalamudGrey, "(?)");
             if (ImGui.IsItemHovered()) {
-                ImGui.SetTooltip("This should only display relevant status for you.\nIf you find one that should be filtered but is not, please report it\nby using the feedback button or by pinging Aireil in goat place Discord.");
+                ImGui.SetTooltip(Loc.T("This should only display relevant status for you.\nIf you find one that should be filtered but is not, please report it\nby using the feedback button or by pinging Aireil in goat place Discord."));
             }
 
             ImGui.SameLine();
-            if (ImGui.Button("Personal Status List##PersonalStatusList")) {
+            if (ImGui.Button(Loc.T("Personal Status List") + "##PersonalStatusList")) {
                 ImGui.OpenPopup("PersonalStatusList");
             }
 
             DrawPersonalStatusListPopup();
 
-            ImGui.Text("Custom filtered status (added to the setting above):");
+            ImGui.Text(Loc.T("Custom filtered status (added to the setting above):"));
 
             var ySize = 23.0f + (25.0f * Config.FilteredStatusCustom.Count);
             if (ySize > 125.0f) {

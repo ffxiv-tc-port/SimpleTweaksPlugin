@@ -32,31 +32,31 @@ public unsafe class MinimapAdjustments : UiAdjustments.SubTweak {
     public Configs Config { get; private set; }
 
     protected void DrawConfig(ref bool hasChanged) {
-        hasChanged |= ImGui.Checkbox("Hide Coordinates", ref Config.HideCoordinates);
+        hasChanged |= ImGui.Checkbox(Loc.T("Hide Coordinates"), ref Config.HideCoordinates);
         if (!Config.HideCoordinates) {
             ImGui.SameLine();
             ImGui.SetNextItemWidth(300);
             hasChanged |= ImGui.DragFloat2("Position##CoordinatePosition", ref Config.CoordinatesPosition, 0.1f);
             if (ImGui.IsItemHovered()) {
-                ImGui.SetTooltip("CTRL+Click to set exact value.");
+                ImGui.SetTooltip(Loc.T("CTRL+Click to set exact value."));
             }
         }
 
-        hasChanged |= ImGui.Checkbox("Hide Compass Lock", ref Config.HideCompassLock);
-        hasChanged |= ImGui.Checkbox("Hide Compass Directions", ref Config.HideCompassDirections);
-        hasChanged |= ImGui.Checkbox("Hide Zoom Buttons", ref Config.HideZoom);
-        hasChanged |= ImGui.Checkbox("Hide Sun", ref Config.HideSun);
-        hasChanged |= ImGui.Checkbox("Hide Weather", ref Config.HideWeather);
+        hasChanged |= ImGui.Checkbox(Loc.T("Hide Compass Lock"), ref Config.HideCompassLock);
+        hasChanged |= ImGui.Checkbox(Loc.T("Hide Compass Directions"), ref Config.HideCompassDirections);
+        hasChanged |= ImGui.Checkbox(Loc.T("Hide Zoom Buttons"), ref Config.HideZoom);
+        hasChanged |= ImGui.Checkbox(Loc.T("Hide Sun"), ref Config.HideSun);
+        hasChanged |= ImGui.Checkbox(Loc.T("Hide Weather"), ref Config.HideWeather);
         if (!Config.HideWeather) {
             ImGui.SameLine();
             ImGui.SetNextItemWidth(150);
             hasChanged |= ImGui.SliderAngle("Position##weatherPosition", ref Config.WeatherPosition, 0, 360);
         }
 
-        hasChanged |= ImGui.Checkbox("Clean Border", ref Config.CleanBorder);
+        hasChanged |= ImGui.Checkbox(Loc.T("Clean Border"), ref Config.CleanBorder);
         if (Config.CleanBorder) {
             ImGui.SameLine();
-            hasChanged |= ImGui.Checkbox("No Border", ref Config.NoBorder);
+            hasChanged |= ImGui.Checkbox(Loc.T("No Border"), ref Config.NoBorder);
         }
 
         if (hasChanged) Update(true);

@@ -31,7 +31,7 @@ public unsafe class HideHotbarLock : Tweak {
         ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, Vector2.Zero);
 
         ImGui.Dummy(new Vector2(boxSize.Y / 2 - s2.Y / 2));
-        ImGui.Checkbox("Show while holding ", ref Config.ShowWhileHoldingShift);
+        ImGui.Checkbox(Loc.T("Show while holding "), ref Config.ShowWhileHoldingShift);
         ImGui.PopStyleVar();
         ImGui.Dummy(Vector2.Zero);
         ImGui.EndGroup();

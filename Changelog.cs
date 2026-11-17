@@ -143,9 +143,13 @@ public class Changelog : Window {
     
     public Changelog() : base("###simpleTweaksChangelog") {
         CurrentVersion = Assembly.GetExecutingAssembly().GetName().Version;
-        WindowName = $"Simple Tweaks Changelog ({CurrentVersion})###simpleTweaksChangelog";
+        UpdateWindowName();
         Size = ImGuiHelpers.ScaledVector2(600, 600);
         SizeCondition = ImGuiCond.FirstUseEver;
+    }
+
+    public void UpdateWindowName() {
+        WindowName = $"{Loc.T("Simple Tweaks Changelog ({0})", CurrentVersion)}###simpleTweaksChangelog";
     }
 
     public override void OnOpen() {
@@ -296,7 +300,7 @@ public class Changelog : Window {
             if (version.Major == 99) flags |= ImGuiTreeNodeFlags.DefaultOpen;
             var versionHeaderText = version.Major == 99 ? "Unreleased" : $"Version {version}";
 #else
-            var versionHeaderText = $"Version {version}";
+            var versionHeaderText = Loc.T("Version {0}", version);
 #endif
 
             if (flags.HasFlag(ImGuiTreeNodeFlags.DefaultOpen)) ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
@@ -310,7 +314,7 @@ public class Changelog : Window {
             var generalChanges = changelogs.Where(c => c.Tweak == null);
             
             if (generalChanges.Any()) {
-                if (ImGui.TreeNodeEx($"General Changes##{version}", ImGuiTreeNodeFlags.DefaultOpen)) {
+                if (ImGui.TreeNodeEx($"{Loc.T("General Changes")}##{version}", ImGuiTreeNodeFlags.DefaultOpen)) {
                     foreach (var c in generalChanges) {
                         ImGui.TreeNodeEx(c.Change, ImGuiTreeNodeFlags.Leaf | ImGuiTreeNodeFlags.NoTreePushOnOpen | ImGuiTreeNodeFlags.Bullet);
                         if (c.ChangeAuthor != null) {
@@ -324,7 +328,7 @@ public class Changelog : Window {
 
             var newTweaks = changelogs.Where(c => c.IsNewTweak && c.Tweak != null && ShouldShowTweak(c.Tweak)).OrderBy(c => c.Tweak.Name);
             if (newTweaks.Any()) {
-                if (ImGui.TreeNodeEx($"New Tweaks##{version}", ImGuiTreeNodeFlags.DefaultOpen)) {
+                if (ImGui.TreeNodeEx($"{Loc.T("New Tweaks")}##{version}", ImGuiTreeNodeFlags.DefaultOpen)) {
                     foreach (var c in newTweaks) {
                         if (c.Tweak == null) continue;
 
@@ -338,7 +342,7 @@ public class Changelog : Window {
                         }
 
                         if (ImGui.IsItemHovered()) {
-                            ImGui.SetTooltip($"Click to find '{c.Tweak.Name}' in Simple Tweaks config window");
+                            ImGui.SetTooltip(Loc.T("Click to find '{0}' in Simple Tweaks config window", c.Tweak.Name));
                         }
                         
                         if (c.ChangeAuthor != null) {
@@ -363,7 +367,7 @@ public class Changelog : Window {
 
             var tweakChanges = changelogs.Where(c => c.Tweak != null && c.IsNewTweak == false && ShouldShowTweak(c.Tweak)).GroupBy(c => c.Tweak);
             if (tweakChanges.Any()) {
-                if (ImGui.TreeNodeEx($"Tweak Changes##{version}", ImGuiTreeNodeFlags.DefaultOpen)) {
+                if (ImGui.TreeNodeEx($"{Loc.T("Tweak Changes")}##{version}", ImGuiTreeNodeFlags.DefaultOpen)) {
                     foreach (var group in tweakChanges.OrderBy(g => g.Key.Name)) {
                         var tweak = group.Key;
 
@@ -378,7 +382,7 @@ public class Changelog : Window {
                             SimpleTweaksPlugin.Plugin.ConfigWindow.IsOpen = true;
                             SimpleTweaksPlugin.Plugin.PluginConfig.FocusTweak(tweak);
                         }
-                        if (ImGui.IsItemHovered()) ImGui.SetTooltip($"Find '{tweak.Name}' in Simple Tweaks config");
+                        if (ImGui.IsItemHovered()) ImGui.SetTooltip(Loc.T("Find '{0}' in Simple Tweaks config", tweak.Name));
                         ImGui.SetCursorPosX(xAfter);
 
                         if (open) {

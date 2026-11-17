@@ -32,18 +32,18 @@ public unsafe class CustomDefaultQuantity : Tweak {
 
     protected void DrawConfig() {
         void DrawModeConfig(ModeConfig modeConfig, string label) {
-            ImGui.Checkbox($"Apply to '{label}'", ref modeConfig.Enable);
+            ImGui.Checkbox(Loc.T("Apply to '{0}'", label), ref modeConfig.Enable);
             if (modeConfig.Enable) {
                 using (ImRaii.PushIndent()) {
-                    ImGui.Checkbox($"Use Percentage##{label}", ref modeConfig.UsePercentage);
+                    ImGui.Checkbox($"{Loc.T("Use Percentage")}##{label}", ref modeConfig.UsePercentage);
                     ImGui.SetNextItemWidth(200);
                     if (modeConfig.UsePercentage) {
-                        if (ImGui.SliderInt($"Percent of Max##{label}", ref modeConfig.Percentage, 0, 100, "%d%%", ImGuiSliderFlags.AlwaysClamp)) {
+                        if (ImGui.SliderInt($"{Loc.T("Percent of Max")}##{label}", ref modeConfig.Percentage, 0, 100, "%d%%", ImGuiSliderFlags.AlwaysClamp)) {
                             if (modeConfig.Percentage < 0) modeConfig.Percentage = 0;
                             if (modeConfig.Percentage > 100) modeConfig.Percentage = 100;
                         }
                     } else {
-                        if (ImGui.InputInt($"Default Quantity##{label}", ref modeConfig.Quantity)) {
+                        if (ImGui.InputInt($"{Loc.T("Default Quantity")}##{label}", ref modeConfig.Quantity)) {
                             if (modeConfig.Quantity < 1) modeConfig.Quantity = 1;
                         }
                     }

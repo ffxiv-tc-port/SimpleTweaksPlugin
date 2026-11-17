@@ -50,6 +50,7 @@
     </ItemGroup>
     <ItemGroup>
       <EmbeddedResource Include="tweakBlacklist.txt" LogicalName="SimpleTweaksPlugin.tweakBlacklist.txt" />
+      <EmbeddedResource Include="Localization/zh-TW.json" LogicalName="SimpleTweaksPlugin.Localization.zh-TW.json" />
     </ItemGroup>
     <ItemGroup>
       <PackageReference Include="System.Numerics.Vectors" Version="4.6.0" />

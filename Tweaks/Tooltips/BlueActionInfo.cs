@@ -29,7 +29,7 @@ public unsafe class BlueActionInfo : TooltipTweaks.SubTweak {
         descriptionString.Append(NewLinePayload.Payload);
         descriptionString.Append(new UIForegroundPayload(500));
         descriptionString.Append(new UIGlowPayload(7));
-        descriptionString.Append(new TextPayload($"Blue Magic Spell #{aozActionTransient.Value.Number}"));
+        descriptionString.Append(new TextPayload(Loc.T("Blue Magic Spell #{0}", aozActionTransient.Value.Number)));
         descriptionString.Append(new UIForegroundPayload(0));
         descriptionString.Append(new UIGlowPayload(0));
         descriptionString.Append(NewLinePayload.Payload);

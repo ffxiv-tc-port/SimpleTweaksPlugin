@@ -43,14 +43,14 @@ public unsafe partial class ColoredDutyRoulette : UiAdjustments.SubTweak {
     [TweakConfig] private Config TweakConfig { get; set; } = null!;
 
     protected void DrawConfig() {
-        if (ImGui.Checkbox("Recolor Completed Roulettes", ref TweakConfig.ColorCompleteRoulette)) SaveConfig(TweakConfig);
-        if (ImGui.Checkbox("Recolor Incomplete Roulettes", ref TweakConfig.ColorIncompleteRoulette)) SaveConfig(TweakConfig);
-        if (ImGui.ColorEdit4("Completed Color", ref TweakConfig.CompleteColor, ImGuiColorEditFlags.NoInputs | ImGuiColorEditFlags.AlphaPreviewHalf)) SaveConfig(TweakConfig);
-        if (ImGui.ColorEdit4("Incomplete Color", ref TweakConfig.IncompleteColor, ImGuiColorEditFlags.NoInputs | ImGuiColorEditFlags.AlphaPreviewHalf)) SaveConfig(TweakConfig);
+        if (ImGui.Checkbox(Loc.T("Recolor Completed Roulettes"), ref TweakConfig.ColorCompleteRoulette)) SaveConfig(TweakConfig);
+        if (ImGui.Checkbox(Loc.T("Recolor Incomplete Roulettes"), ref TweakConfig.ColorIncompleteRoulette)) SaveConfig(TweakConfig);
+        if (ImGui.ColorEdit4(Loc.T("Completed Color"), ref TweakConfig.CompleteColor, ImGuiColorEditFlags.NoInputs | ImGuiColorEditFlags.AlphaPreviewHalf)) SaveConfig(TweakConfig);
+        if (ImGui.ColorEdit4(Loc.T("Incomplete Color"), ref TweakConfig.IncompleteColor, ImGuiColorEditFlags.NoInputs | ImGuiColorEditFlags.AlphaPreviewHalf)) SaveConfig(TweakConfig);
 
         ImGuiHelpers.ScaledDummy(5.0f);
         
-        ImGui.Text("Duty Selection");
+        ImGui.Text(Loc.T("Duty Selection"));
         ImGui.Separator();
 
         var roulettes = Service.Data.GetExcelSheet<ContentRoulette>()!

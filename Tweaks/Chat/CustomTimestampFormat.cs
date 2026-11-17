@@ -32,19 +32,19 @@ public unsafe class CustomTimestampFormat : ChatTweaks.SubTweak {
     public Configs Config { get; private set; }
 
     protected void DrawConfig(ref bool hasChanged) {
-        hasChanged |= ImGui.Checkbox("Use Server Time", ref Config.UseServerTime);
-        hasChanged |= ImGui.Checkbox("Apply Color", ref Config.DoColor);
+        hasChanged |= ImGui.Checkbox(Loc.T("Use Server Time"), ref Config.UseServerTime);
+        hasChanged |= ImGui.Checkbox(Loc.T("Apply Color"), ref Config.DoColor);
         if (Config.DoColor) {
             ImGui.SameLine();
             ImGui.ColorEdit3("##color", ref Config.Color, ImGuiColorEditFlags.NoInputs);
         }
 
         ImGui.SetNextItemWidth(200 * ImGuiHelpers.GlobalScale);
-        hasChanged |= ImGui.InputText("Format##timestampFormatEditInput", ref Config.Format, 80);
+        hasChanged |= ImGui.InputText(Loc.T("Format") + "##timestampFormatEditInput", ref Config.Format, 80);
         ImGui.SameLine();
         ImGui.TextDisabled($"   {(Config.UseServerTime ? DateTime.UtcNow : DateTime.Now).ToString(Config.Format)}");
 
-        ImGui.Text("Presets:");
+        ImGui.Text(Loc.T("Presets:"));
         if (ImGui.BeginTable("presetList", (int)(ImGui.GetContentRegionAvail().X / 150) + 1)) {
             void PresetButton(string format) {
                 ImGui.TableNextColumn();

@@ -335,7 +335,7 @@ public unsafe class ExpandedCurrencyDisplay : UiAdjustments.SubTweak {
         
         var regionSize = ImGui.GetContentRegionAvail();
         ImGui.SetNextItemWidth(regionSize.X * 2.0f / 3.0f);
-        if (ImGui.BeginCombo("Direction", TweakConfig.DisplayDirection.ToString())) {
+        if (ImGui.BeginCombo(Loc.T("Direction"), TweakConfig.DisplayDirection.ToString())) {
             foreach (var direction in Enum.GetValues<Direction>()) {
                 if (ImGui.Selectable(direction.ToString(), TweakConfig.DisplayDirection == direction)) {
                     TweakConfig.DisplayDirection = direction;
@@ -358,28 +358,28 @@ public unsafe class ExpandedCurrencyDisplay : UiAdjustments.SubTweak {
 
     private void DrawGridConfig() {
 
-        if (ImGui.Checkbox("Disable Interaction", ref TweakConfig.DisableEvents)) {
+        if (ImGui.Checkbox(Loc.T("Disable Interaction"), ref TweakConfig.DisableEvents)) {
             SaveConfig(TweakConfig);
             FreeAllNodes();
         }
         ImGui.SameLine();
-        ImGuiComponents.HelpMarker("Disables tooltips for currency icons. \n - Should also help if you have issues with the UI moving unexpectedly.");
+        ImGuiComponents.HelpMarker(Loc.T("Disables tooltips for currency icons. \n - Should also help if you have issues with the UI moving unexpectedly."));
 
-        ImGui.Checkbox("Use Grid Layout", ref TweakConfig.Grid);
+        ImGui.Checkbox(Loc.T("Use Grid Layout"), ref TweakConfig.Grid);
 
         if (TweakConfig.Grid) {
             ImGui.Indent();
             var regionSize = ImGui.GetContentRegionAvail();
             
             ImGui.SetNextItemWidth(regionSize.X * 2.0f / 3.0f);
-            if (ImGui.InputInt("Currencies Per Line", ref TweakConfig.GridSize)) {
+            if (ImGui.InputInt(Loc.T("Currencies Per Line"), ref TweakConfig.GridSize)) {
                 if (TweakConfig.GridSize < 2) TweakConfig.GridSize = 2;
                 SaveConfig(TweakConfig);
             }
             if (TweakConfig.GridSize < 2) TweakConfig.GridSize = 2;
             
             ImGui.SetNextItemWidth(regionSize.X * 2.0f / 3.0f);
-            if (ImGui.BeginCombo("Grid Growth Direction", TweakConfig.GridGrowth.ToString()))
+            if (ImGui.BeginCombo(Loc.T("Grid Growth Direction"), TweakConfig.GridGrowth.ToString()))
             {
                 foreach (var direction in Enum.GetValues<Direction>())
                 {
@@ -396,7 +396,7 @@ public unsafe class ExpandedCurrencyDisplay : UiAdjustments.SubTweak {
                 ImGui.EndCombo();
             }
 
-            ImGui.Text("Grid Spacing: ");
+            ImGui.Text(Loc.T("Grid Spacing: "));
             ImGui.Indent();
 
             for (var spacingIndex = 0; spacingIndex < TweakConfig.GridSpacing.Length; spacingIndex++) {
@@ -408,7 +408,7 @@ public unsafe class ExpandedCurrencyDisplay : UiAdjustments.SubTweak {
                     spacingIndex--;
                     continue;
                 }
-                if (ImGui.IsItemHovered()) ImGui.SetTooltip("Remove Column");
+                if (ImGui.IsItemHovered()) ImGui.SetTooltip(Loc.T("Remove Column"));
                 ImGui.SameLine();
                 ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X * 2.0f / 3.0f);
                 if (ImGui.DragFloat($"Column#{spacingIndex + 1}", ref TweakConfig.GridSpacing[spacingIndex], 0.5f)) {
@@ -419,7 +419,7 @@ public unsafe class ExpandedCurrencyDisplay : UiAdjustments.SubTweak {
             if (ImGuiExt.IconButton("addGridSpacing", FontAwesomeIcon.Plus)) {
                 Array.Resize(ref TweakConfig.GridSpacing, TweakConfig.GridSpacing.Length + 1);
             }
-            if (ImGui.IsItemHovered()) ImGui.SetTooltip("Add Column");
+            if (ImGui.IsItemHovered()) ImGui.SetTooltip(Loc.T("Add Column"));
             ImGui.Unindent();
             ImGui.Unindent();
         }
@@ -449,11 +449,11 @@ public unsafe class ExpandedCurrencyDisplay : UiAdjustments.SubTweak {
             UpdateSearch();
         }
         ImGui.SameLine();
-        if (ImGui.Checkbox("HQ Item", ref hqItemSearch)) {
+        if (ImGui.Checkbox(Loc.T("HQ Item"), ref hqItemSearch)) {
             if (hqItemSearch) collectibleItemSearch = false;
             UpdateSearch();
         }
-        ImGuiComponents.HelpMarker("To track HQ items such as Tinctures or Foods, enable 'HQ Item'");
+        ImGuiComponents.HelpMarker(Loc.T("To track HQ items such as Tinctures or Foods, enable 'HQ Item'"));
 
         if (ImGui.BeginChild("###SearchResultChild", new Vector2(regionSize.X * 2.0f / 3.0f, 100.0f * ImGuiHelpers.GlobalScale), true)) {
             if (searchedItems.Count == 0) {
@@ -494,11 +494,11 @@ public unsafe class ExpandedCurrencyDisplay : UiAdjustments.SubTweak {
         ImGui.EndChild();
 
         ImGui.SameLine();
-        if (ImGui.Checkbox("Collectible Item", ref collectibleItemSearch)) {
+        if (ImGui.Checkbox(Loc.T("Collectible Item"), ref collectibleItemSearch)) {
             if (collectibleItemSearch) hqItemSearch = false;
             UpdateSearch();
         }
-        ImGuiComponents.HelpMarker("To track Collectible items.");
+        ImGuiComponents.HelpMarker(Loc.T("To track Collectible items."));
     }
     
     private void DrawCurrencies() {
@@ -584,12 +584,12 @@ public unsafe class ExpandedCurrencyDisplay : UiAdjustments.SubTweak {
             if (!shownAutoGc && currency.ItemId is 20 or 21 or 22) {
                 shownAutoGc = true;
                 ImGui.SameLine();
-                if (ImGui.Checkbox("Automatically Select Grand Company", ref currency.AutoAdjustGrandCompany)) {
+                if (ImGui.Checkbox(Loc.T("Automatically Select Grand Company"), ref currency.AutoAdjustGrandCompany)) {
                     FreeAllNodes();
                     SaveConfig(TweakConfig);
                 }
                 if (ImGui.IsItemHovered()) {
-                    ImGui.SetTooltip("If enabled, grand company seals will be automatically adjusted to show your current grand company.");
+                    ImGui.SetTooltip(Loc.T("If enabled, grand company seals will be automatically adjusted to show your current grand company."));
                 }
             }
             

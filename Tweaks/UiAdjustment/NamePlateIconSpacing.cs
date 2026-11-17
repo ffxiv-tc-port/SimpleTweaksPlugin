@@ -23,7 +23,7 @@ public class NamePlateIconSpacing : UiAdjustments.SubTweak {
     protected void DrawConfig(ref bool hasChanged) {
         var spacing = (int)Config.Spacing;
 
-        if (ImGui.SliderInt("Spacing", ref spacing, MinSpacing, MaxSpacing)) {
+        if (ImGui.SliderInt(Loc.T("Spacing"), ref spacing, MinSpacing, MaxSpacing)) {
             if (spacing < MinSpacing) spacing = MinSpacing;
             if (spacing > MaxSpacing) spacing = MaxSpacing;
             Config.Spacing = (byte)spacing;

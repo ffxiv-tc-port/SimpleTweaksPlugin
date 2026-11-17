@@ -54,8 +54,8 @@ public unsafe class ImprovedCraftingLog : Tweak {
                 }
             }
 
-            Service.Chat.PrintError("You can't use that command right now.");
-        })) { HelpMessage = "Stops crafting without closing the crafting log.", ShowInHelp = true });
+            Service.Chat.PrintError(Loc.T("You can't use that command right now."));
+        })) { HelpMessage = Loc.T("Stops crafting without closing the crafting log."), ShowInHelp = true });
 
         ForceUpdate();
     }
@@ -128,7 +128,7 @@ public unsafe class ImprovedCraftingLog : Tweak {
                         return true;
                     }
 
-                    Service.Chat.PrintError($"You have no saved gearset for {Service.Data.Excel.GetSheet<ClassJob>().GetRow(requiredClass).Name.ExtractText()}.");
+                    Service.Chat.PrintError(Loc.T("You have no saved gearset for {0}.", Service.Data.Excel.GetSheet<ClassJob>().GetRow(requiredClass).Name.ExtractText()));
                     return true;
                 }
             }
@@ -233,13 +233,13 @@ public unsafe class ImprovedCraftingLog : Tweak {
             case ClientLanguage.Japanese:
                 return "スイッチ・ジョブ";
             case ClientLanguage.English:
-                return "Switch Job";
+                return Loc.T("Switch Job");
             case ClientLanguage.German:
                 return "Job wechseln";
             case ClientLanguage.French:
                 return "Changer de Job";
             default:
-                return "Switch Job";
+                return Loc.T("Switch Job");
         }
     }
 }
