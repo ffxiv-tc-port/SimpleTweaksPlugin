@@ -1936,7 +1936,7 @@
     "description": "[ExtraEstateTeleportation] Extra Estate Teleportation - Party List"
   },
   "UiAdjustments@ExtraEstateTeleportation / PartyMemberList": {
-    "message": "小隊成員清單（社群視窗）",
+    "message": "小隊成員清單（社交視窗）",
     "description": "[ExtraEstateTeleportation] Extra Estate Teleportation - Party Member List (Social window)"
   },
   "UiAdjustments@FadeUnavailableActions / Description": {
