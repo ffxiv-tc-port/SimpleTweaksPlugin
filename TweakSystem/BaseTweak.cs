@@ -324,9 +324,21 @@ public abstract class BaseTweak {
 
     public virtual void LanguageChanged() { }
 
+    // 自動設定的反射結果每個執行個體只建一次；只在繪圖執行緒用、不加鎖。
+    // 刻意不放靜態以 Type 為鍵：自訂 tweak 載在可卸載的 TweakLoadContext，靜態快取會留住它。
+    private bool autoConfigPropertyResolved;
+    private PropertyInfo autoConfigProperty;
+    private Type autoConfigFieldsType;
+    private (FieldInfo Field, TweakConfigOptionAttribute Attr, MethodInfo ShouldShow)[] autoConfigFields;
+
     private void DrawAutoConfig(ref bool hasChanged) {
         try {
-            var configProperty = this.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic).FirstOrDefault(p => p.PropertyType.IsSubclassOf(typeof(TweakConfig)));
+            if (!autoConfigPropertyResolved) {
+                autoConfigProperty = this.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic).FirstOrDefault(p => p.PropertyType.IsSubclassOf(typeof(TweakConfig)));
+                autoConfigPropertyResolved = true;
+            }
+
+            var configProperty = autoConfigProperty;
             if (configProperty == null) {
                 ImGui.Text(Loc.T("No Config Property Found"));
                 return;
@@ -339,12 +351,21 @@ public abstract class BaseTweak {
                 configProperty.SetValue(this, configObj);
             }
 
-            var fields = configObj.GetType().GetFields().Where(f => f.GetCustomAttribute(typeof(TweakConfigOptionAttribute)) != null).Select(f => (f, (TweakConfigOptionAttribute)f.GetCustomAttribute(typeof(TweakConfigOptionAttribute)))).OrderBy(a => a.Item2.Priority).ThenBy(a => a.Item2.Name);
+            // 屬性實例跨幀共用：全 repo 沒有地方改 TweakConfigOptionAttribute 的 setter。
+            var configType = configObj.GetType();
+            if (autoConfigFieldsType != configType) {
+                autoConfigFields = configType.GetFields()
+                    .Select(f => (f, attr: (TweakConfigOptionAttribute)f.GetCustomAttribute(typeof(TweakConfigOptionAttribute))))
+                    .Where(a => a.attr != null)
+                    .OrderBy(a => a.attr.Priority).ThenBy(a => a.attr.Name)
+                    .Select(a => (a.f, a.attr, a.attr.ConditionalDisplay ? configType.GetMethod($"ShouldShow{a.f.Name}", BindingFlags.Public | BindingFlags.Instance) : null))
+                    .ToArray();
+                autoConfigFieldsType = configType;
+            }
 
             var configOptionIndex = 0;
-            foreach (var (f, attr) in fields) {
+            foreach (var (f, attr, conditionalMethod) in autoConfigFields) {
                 if (attr.ConditionalDisplay) {
-                    var conditionalMethod = configObj.GetType().GetMethod($"ShouldShow{f.Name}", BindingFlags.Public | BindingFlags.Instance);
                     if (conditionalMethod != null) {
                         var shouldShow = (bool)(conditionalMethod.Invoke(configObj, Array.Empty<object?>()) ?? true);
                         if (!shouldShow) continue;

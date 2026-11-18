@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -23,23 +24,36 @@ using ValueType = FFXIVClientStructs.FFXIV.Component.GUI.ValueType;
 namespace SimpleTweaksPlugin.Utility; 
 
 public static class Extensions {
+    // 列舉值 → 未翻譯的描述／提示，反射只做一次；Loc.T 每次照查，語言切換不必作廢。
+    // 以列舉型別為弱鍵：自訂 tweak 的列舉來自可卸載的 TweakLoadContext，不可被靜態快取留住。
+    private static readonly ConditionalWeakTable<Type, ConcurrentDictionary<Enum, string>> EnumDescriptions = new();
+    private static readonly ConditionalWeakTable<Type, ConcurrentDictionary<Enum, (bool HasMember, EnumTooltipAttribute Attr)>> EnumTooltips = new();
+
     public static string GetDescription(this Enum @enum) {
-        var eType = @enum.GetType();
-        var member = eType.GetMember(@enum.ToString());
-        if ((member.Length <= 0)) return @enum.ToString();
-        var attribs = member[0].GetCustomAttributes(typeof(System.ComponentModel.DescriptionAttribute), false);
-        return attribs.Length > 0 ? ((System.ComponentModel.DescriptionAttribute)attribs[0]).Description : @enum.ToString();
+        var cache = EnumDescriptions.GetValue(@enum.GetType(), static _ => new ConcurrentDictionary<Enum, string>());
+        return cache.GetOrAdd(@enum, static e => {
+            var member = e.GetType().GetMember(e.ToString());
+            if ((member.Length <= 0)) return e.ToString();
+            var attribs = member[0].GetCustomAttributes(typeof(System.ComponentModel.DescriptionAttribute), false);
+            return attribs.Length > 0 ? ((System.ComponentModel.DescriptionAttribute)attribs[0]).Description : e.ToString();
+        });
     }
 
     public static string GetLocalizedDescription(this Enum @enum) => Loc.T(@enum.GetDescription());
 
     public static bool TryGetTooltip(this Enum @enum, [NotNullWhen(true)] out string? tooltip) {
-        tooltip = string.Empty;
-        var eType = @enum.GetType();
-        var member = eType.GetMember(@enum.ToString());
-        if (member.Length <= 0) return false;
-        var attribs = member[0].GetCustomAttributes(typeof(EnumTooltipAttribute), false);
-        tooltip =  attribs.Length > 0 ? Loc.T(((EnumTooltipAttribute)attribs[0]).Text) : null;
+        var cache = EnumTooltips.GetValue(@enum.GetType(), static _ => new ConcurrentDictionary<Enum, (bool, EnumTooltipAttribute)>());
+        var (hasMember, attr) = cache.GetOrAdd(@enum, static e => {
+            var member = e.GetType().GetMember(e.ToString());
+            if (member.Length <= 0) return (false, (EnumTooltipAttribute)null);
+            var attribs = member[0].GetCustomAttributes(typeof(EnumTooltipAttribute), false);
+            return (true, attribs.Length > 0 ? (EnumTooltipAttribute)attribs[0] : null);
+        });
+        if (!hasMember) {
+            tooltip = string.Empty;
+            return false;
+        }
+        tooltip = attr != null ? Loc.T(attr.Text) : null;
         return tooltip != null;
     }
 
