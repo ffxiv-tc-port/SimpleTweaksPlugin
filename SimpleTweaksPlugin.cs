@@ -388,7 +388,9 @@ namespace SimpleTweaksPlugin {
             
             
             
-            foreach (var e in ErrorList.Where(e => e.IsNew && e.Tweak != null)) {
+            // 每幀都跑：用 List 的結構列舉子，不經 LINQ 迭代器，穩態零配置。
+            foreach (var e in ErrorList) {
+                if (!e.IsNew || e.Tweak == null) continue;
                 e.IsNew = false;
                 e.Tweak.InternalDisable();
                 Service.NotificationManager.AddNotification(new Notification { Content = Loc.T("{0} has been disabled due to an error.", e.Tweak.Name), Title = "Simple Tweaks", Type = NotificationType.Error }); 

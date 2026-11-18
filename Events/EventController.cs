@@ -33,6 +33,7 @@ public static unsafe class EventController {
         private Type addonPointerType;
         public uint NthTick { get; init; }
         private uint tick;
+        private string perfKey;
 
         public bool Enabled { get; set; } = true;
         
@@ -180,7 +181,9 @@ public static unsafe class EventController {
                 if (!DetermineInvokeKind()) return;
             }
 
-            using var perfMon = PerformanceMonitor.Run($"[Event] {Tweak.Key} :: {Method.Name}");
+            // 每幀路徑：鍵只組一次（Tweak.Key／Method.Name 在訂閱者生命期內不變），計時改用不配置物件的 Begin／End。
+            perfKey ??= $"[Event] {Tweak.Key} :: {Method.Name}";
+            PerformanceMonitor.Begin(perfKey);
 
             try {
                 var _ = Kind switch {
@@ -207,6 +210,8 @@ public static unsafe class EventController {
                 SimpleLog.Error($"Error invoking {Tweak.Key} :: {Method.Name}. Event has been disabled.");
                 Kind = SubscriberKind.Error;
                 SimpleTweaksPlugin.Plugin.Error(Tweak, ex, true);
+            } finally {
+                PerformanceMonitor.End(perfKey);
             }
         }
     }
