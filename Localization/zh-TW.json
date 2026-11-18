@@ -4,7 +4,7 @@
     "description": "All Tweaks Tab Header"
   },
   "AutoLockHotbar / Description": {
-    "message": "在符合特定條件時自動鎖定快速鍵列。",
+    "message": "在符合特定條件時自動鎖定快速鍵。",
     "description": "[AutoLockHotbar] Tweak Description"
   },
   "AutoLockHotbar / Lock at beginning of combat.": {
@@ -12,7 +12,7 @@
     "description": "[AutoLockHotbar] [Config] Lock at beginning of combat."
   },
   "AutoLockHotbar / Lock Cross Hotbar": {
-    "message": "鎖定十字快速鍵列",
+    "message": "鎖定十字快速鍵",
     "description": "[AutoLockHotbar] [Config] Lock Cross Hotbar"
   },
   "AutoLockHotbar / Lock when changing zone.": {
@@ -20,7 +20,7 @@
     "description": "[AutoLockHotbar] [Config] Lock when changing zone."
   },
   "AutoLockHotbar / Name": {
-    "message": "自動鎖定快速鍵列",
+    "message": "自動鎖定快速鍵",
     "description": "[AutoLockHotbar] Tweak Name"
   },
   "AutoLockHotbar / Unlock when combat ends.": {
@@ -628,11 +628,11 @@
     "description": "[EnsureTooltipRemainsOnScreen] [Config] Padding"
   },
   "EquipFromHotbar / Description": {
-    "message": "讓指派在快速鍵列上的物品可以直接裝備。",
+    "message": "讓指派在快速鍵上的物品可以直接裝備。",
     "description": "[EquipFromHotbar] Tweak Description"
   },
   "EquipFromHotbar / Name": {
-    "message": "從快速鍵列裝備物品",
+    "message": "從快速鍵裝備物品",
     "description": "[EquipFromHotbar] Tweak Name"
   },
   "EquipJobCommand / Description": {
@@ -708,11 +708,11 @@
     "description": "[FurnitureClocksCustomTime] Tweak Name"
   },
   "GcArmyChemistryAvailable / Description": {
-    "message": "在有新搭配可用的軍隊成員上方顯示圖示。",
+    "message": "在有新吉兆可用的分隊員上方顯示圖示。",
     "description": "[GcArmyChemistryAvailable] Tweak Description"
   },
   "GcArmyChemistryAvailable / Name": {
-    "message": "軍隊成員可搭配提示圖示",
+    "message": "分隊吉兆可用圖示",
     "description": "[GcArmyChemistryAvailable] Tweak Name"
   },
   "GearsetSaveCurrent / Description": {
@@ -784,11 +784,11 @@
     "description": "Hide Tweak - Hide Tweak"
   },
   "HideHotbarLock / Description": {
-    "message": "隱藏快速鍵列的鎖定按鈕，並可選擇在按住 SHIFT 時顯示。",
+    "message": "隱藏快速鍵的鎖定按鈕，並可選擇在按住 SHIFT 時顯示。",
     "description": "[HideHotbarLock] Tweak Description"
   },
   "HideHotbarLock / Name": {
-    "message": "隱藏快速鍵列鎖定",
+    "message": "隱藏快速鍵鎖定",
     "description": "[HideHotbarLock] Tweak Name"
   },
   "HideMouseAfterInactivity / Description": {
@@ -1108,19 +1108,19 @@
     "description": "[SpecialCharacterInput] Tweak Name"
   },
   "SyncCrafterBars / Description": {
-    "message": "讓能工巧匠各職業的快速鍵列保持同步。",
+    "message": "讓能工巧匠各職業的快速鍵保持同步。",
     "description": "[SyncCrafterBars] Tweak Description"
   },
   "SyncCrafterBars / Name": {
-    "message": "同步能工巧匠快速鍵列",
+    "message": "同步能工巧匠快速鍵",
     "description": "[SyncCrafterBars] Tweak Name"
   },
   "SyncGathererBars / Description": {
-    "message": "讓採掘師與園藝師的快速鍵列保持同步。",
+    "message": "讓採掘師與園藝師的快速鍵保持同步。",
     "description": "[SyncGathererBars] Tweak Description"
   },
   "SyncGathererBars / Name": {
-    "message": "同步大地使者快速鍵列",
+    "message": "同步大地使者快速鍵",
     "description": "[SyncGathererBars] Tweak Name"
   },
   "SystemConfigInGroupPose / Description": {
@@ -1172,7 +1172,7 @@
     "description": "[AdditionalItemInfo] [Config] No Sell List"
   },
   "TooltipTweaks@BlueActionInfo / Description": {
-    "message": "在青魔法技能中加入傷害類型、屬性與星級。",
+    "message": "在青魔法技能中加入傷害類型、屬性與評級。",
     "description": "[BlueActionInfo] Tweak Description"
   },
   "TooltipTweaks@BlueActionInfo / Name": {
@@ -1300,11 +1300,11 @@
     "description": "[HideTooltipsInCombat] [Config] Hide Action Tooltips out of Combat"
   },
   "TooltipTweaks@HideTooltipsInCombat / Hide Cross Bar Hints in Combat": {
-    "message": "戰鬥中隱藏十字快速鍵列提示",
+    "message": "戰鬥中隱藏十字快速鍵提示",
     "description": "[HideTooltipsInCombat] [Config] Hide Cross Bar Hints in Combat"
   },
   "TooltipTweaks@HideTooltipsInCombat / Hide Cross Bar Hints out of Combat": {
-    "message": "非戰鬥中隱藏十字快速鍵列提示",
+    "message": "非戰鬥中隱藏十字快速鍵提示",
     "description": "[HideTooltipsInCombat] [Config] Hide Cross Bar Hints out of Combat"
   },
   "TooltipTweaks@HideTooltipsInCombat / Hide Item Tooltips in Combat": {
@@ -1372,7 +1372,7 @@
     "description": "[Item Hotkey - ViewOnUniversalis] Tweak Name"
   },
   "TooltipTweaks@LogosTooltip / Description": {
-    "message": "在提示中顯示該文理碎晶可取得哪一類文理。",
+    "message": "在提示中顯示該文理碎晶可取得哪些文理技能。",
     "description": "[LogosTooltip] Tweak Description"
   },
   "TooltipTweaks@LogosTooltip / Name": {
@@ -1532,11 +1532,11 @@
     "description": "[AccurateVentureTimes] [Config] Simple Display"
   },
   "UiAdjustments@ActionPressMirroring / Description": {
-    "message": "使用技能時，即使同一技能放在多個快速鍵列，也會顯示按下的脈動效果。",
+    "message": "使用技能時，即使同一技能放在多個快速鍵，也會顯示按下的脈動效果。",
     "description": "[ActionPressMirroring] Tweak Description"
   },
   "UiAdjustments@ActionPressMirroring / Name": {
-    "message": "快速鍵列重複技能按下效果",
+    "message": "快速鍵重複技能按下效果",
     "description": "[ActionPressMirroring] Tweak Name"
   },
   "UiAdjustments@AddNumberSeparators / Description": {
@@ -1752,11 +1752,11 @@
     "description": "[ComboTimer] [Config] Y Position Offset"
   },
   "UiAdjustments@ControlHintMirroring / Description": {
-    "message": "將任一快速鍵列格子的按鍵提示，同步顯示在放有相同技能但未綁定按鍵的格子上。",
+    "message": "將任一快速鍵格子的按鍵提示，同步顯示在放有相同技能但未綁定按鍵的格子上。",
     "description": "[ControlHintMirroring] Tweak Description"
   },
   "UiAdjustments@ControlHintMirroring / Name": {
-    "message": "快速鍵列重複按鍵提示",
+    "message": "快速鍵重複按鍵提示",
     "description": "[ControlHintMirroring] Tweak Name"
   },
   "UiAdjustments@CustomFreeCompanyTags / AddButton": {
@@ -2100,7 +2100,7 @@
     "description": "[InventoryGil] Tweak Name"
   },
   "UiAdjustments@LargeCooldownCounter / Description": {
-    "message": "放大快速鍵列上的冷卻計數。",
+    "message": "放大快速鍵上的冷卻計數。",
     "description": "[LargeCooldownCounter] Tweak Description"
   },
   "UiAdjustments@LargeCooldownCounter / Edge Colour": {
@@ -2380,11 +2380,11 @@
     "description": "[RememberTitleSorting] Tweak Name"
   },
   "UiAdjustments@RemoveCommunityFinder / Description": {
-    "message": "隱藏社群視窗中的社群搜尋按鈕。",
+    "message": "隱藏社交視窗中的同好招募按鈕。",
     "description": "[RemoveCommunityFinder] Tweak Description"
   },
   "UiAdjustments@RemoveCommunityFinder / Name": {
-    "message": "移除社群搜尋",
+    "message": "移除同好招募",
     "description": "[RemoveCommunityFinder] Tweak Name"
   },
   "UiAdjustments@RemoveQuestMarkerLimit / Description": {
@@ -2716,7 +2716,7 @@
     "description": "UI text: When equipping a ring, hold the SHIFT key to equip to left finger."
   },
   "Text / Any equipment with a special action, such as the teleport with Eternity Ring, will not equip from hotbars.": {
-    "message": "具有特殊技能的裝備（例如永恆之戒的傳送）無法從快速鍵列裝備。",
+    "message": "具有特殊技能的裝備（例如永恆之戒的傳送）無法從快速鍵裝備。",
     "description": "UI text: Any equipment with a special action, such as the teleport with Eternity Ring, wi"
   },
   "Text / Switches to the highest item-level gearset for a job.": {
@@ -2996,27 +2996,27 @@
     "description": "UI text: Custom Entries ({0})"
   },
   "Text / Select bars to sync between jobs.": {
-    "message": "選擇要在各職業之間同步的快速鍵列。",
+    "message": "選擇要在各職業之間同步的快速鍵。",
     "description": "UI text: Select bars to sync between jobs."
   },
   "Text / Hotbar {0}": {
-    "message": "快速鍵列 {0}",
+    "message": "快速鍵{0}",
     "description": "UI text: Hotbar {0}"
   },
   "Text / Shared Hotbars will not be synced": {
-    "message": "共用的快速鍵列不會被同步",
+    "message": "共用的快速鍵不會被同步",
     "description": "UI text: Shared Hotbars will not be synced"
   },
   "Text / Cross Hotbar {0}": {
-    "message": "十字快速鍵列 {0}",
+    "message": "十字快速鍵{0}",
     "description": "UI text: Cross Hotbar {0}"
   },
   "Text / Shared Cross Hotbars will not be synced": {
-    "message": "共用的十字快速鍵列不會被同步",
+    "message": "共用的十字快速鍵不會被同步",
     "description": "UI text: Shared Cross Hotbars will not be synced"
   },
   "Text / Select bars to sync between miner and botanist.": {
-    "message": "選擇要在採掘師與園藝師之間同步的快速鍵列。",
+    "message": "選擇要在採掘師與園藝師之間同步的快速鍵。",
     "description": "UI text: Select bars to sync between miner and botanist."
   },
   "Text / Use a Collection item by name or ID. Use without parameters to list available items and IDs.": {
@@ -3200,7 +3200,7 @@
     "description": "UI text: Add separators to party list HP"
   },
   "Text / Add separators to ability costs on hotbars": {
-    "message": "為快速鍵列上的技能消耗加上分隔符號",
+    "message": "為快速鍵上的技能消耗加上分隔符號",
     "description": "UI text: Add separators to ability costs on hotbars"
   },
   "Text / Add separators to ability costs in tooltips": {
@@ -3288,7 +3288,7 @@
     "description": "UI text: Item exchange confirmations"
   },
   "Text / Blunderville exit dialog": {
-    "message": "Blunderville 離開確認視窗",
+    "message": "金碟巨豆中心離開確認視窗",
     "description": "UI text: Blunderville exit dialog"
   },
   "Text / Focus Target": {
