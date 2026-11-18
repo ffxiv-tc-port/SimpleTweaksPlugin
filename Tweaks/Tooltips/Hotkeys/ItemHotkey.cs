@@ -3,6 +3,7 @@ using System.IO;
 using Dalamud.Game.ClientState.Keys;
 using Lumina.Excel.Sheets;
 using Newtonsoft.Json;
+using SimpleTweaksPlugin.TweakSystem;
 
 namespace SimpleTweaksPlugin.Tweaks.Tooltips.Hotkeys;
 
@@ -79,19 +80,24 @@ public abstract class ItemHotkey : IDisposable {
     public virtual void Dispose() { }
 
     public void LoadConfig() {
+        string configFile = null;
         try {
             Config = (ItemHotkeyConfig)Activator.CreateInstance(configType);
             var configDirectory = Service.PluginInterface.GetPluginConfigDirectory();
-            var configFile = Path.Combine(configDirectory, $"{nameof(TooltipTweaks)}@{nameof(ItemHotkeys)}.{Key}.json");
-            if (File.Exists(configFile)) {
+            configFile = Path.Combine(configDirectory, $"{nameof(TooltipTweaks)}@{nameof(ItemHotkeys)}.{Key}.json");
+            if (TweakConfigFile.TryGetPending(configFile, out var pending)) {
+                Config = (ItemHotkeyConfig)JsonConvert.DeserializeObject(pending, configType);
+            } else if (File.Exists(configFile)) {
                 var jsonString = File.ReadAllText(configFile);
                 Config = (ItemHotkeyConfig)JsonConvert.DeserializeObject(jsonString, configType);
+                if (Config == null) TweakConfigFile.BackupUnreadable(configFile, $"物品快捷鍵「{Name}」的設定檔是空的或無法辨識，這次使用預設值");
             }
 
             Config ??= (ItemHotkeyConfig)Activator.CreateInstance(configType);
         } catch (Exception ex) {
             Config = (ItemHotkeyConfig)Activator.CreateInstance(configType);
             SimpleLog.Error(ex);
+            if (configFile != null && File.Exists(configFile)) TweakConfigFile.BackupUnreadable(configFile, $"物品快捷鍵「{Name}」的設定檔讀不懂（{ex.GetType().Name}），這次使用預設值");
         }
     }
 
@@ -102,7 +108,7 @@ public abstract class ItemHotkey : IDisposable {
             var configFile = Path.Combine(configDirectory, $"{nameof(TooltipTweaks)}@{nameof(ItemHotkeys)}.{Key}.json");
             var jsonString = JsonConvert.SerializeObject(Config, Formatting.Indented);
 #if !TEST
-            File.WriteAllText(configFile, jsonString);
+            TweakConfigFile.Save(configFile, jsonString, $"{nameof(ItemHotkeys)}.{Key}");
 #endif
             
         } catch (Exception ex) {

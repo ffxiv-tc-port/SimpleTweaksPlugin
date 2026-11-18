@@ -165,15 +165,20 @@ public abstract class BaseTweak {
     protected T LoadConfig<T>() where T : TweakConfig => LoadConfig<T>(this.Key);
 
     protected T LoadConfig<T>(string key) where T : TweakConfig {
+        string configFile = null;
         try {
             var configDirectory = PluginInterface.GetPluginConfigDirectory();
-            var configFile = Path.Combine(configDirectory, key + ".json");
+            configFile = Path.Combine(configDirectory, key + ".json");
+            if (TweakConfigFile.TryGetPending(configFile, out var pending)) return JsonConvert.DeserializeObject<T>(pending);
             if (!File.Exists(configFile)) return default;
             var jsonString = File.ReadAllText(configFile);
-            return JsonConvert.DeserializeObject<T>(jsonString);
+            var config = JsonConvert.DeserializeObject<T>(jsonString);
+            if (config == null) TweakConfigFile.BackupUnreadable(configFile, $"tweak「{Name}」的設定檔是空的或無法辨識，這次使用預設值");
+            return config;
         } catch (Exception ex) {
             SimpleLog.Error($"Failed to load config for tweak: {Name}");
             SimpleLog.Error(ex);
+            if (configFile != null && File.Exists(configFile)) TweakConfigFile.BackupUnreadable(configFile, $"tweak「{Name}」的設定檔讀不懂（{ex.GetType().Name}），這次使用預設值");
             return default;
         }
     }
@@ -183,15 +188,20 @@ public abstract class BaseTweak {
 #if TEST
         return null;
 #else
+        string configFile = null;
         try {
             var configDirectory = PluginInterface.GetPluginConfigDirectory();
-            var configFile = Path.Combine(configDirectory, key + ".json");
+            configFile = Path.Combine(configDirectory, key + ".json");
+            if (TweakConfigFile.TryGetPending(configFile, out var pending)) return JsonConvert.DeserializeObject(pending, T);
             if (!File.Exists(configFile)) return default;
             var jsonString = File.ReadAllText(configFile);
-            return JsonConvert.DeserializeObject(jsonString, T);
+            var config = JsonConvert.DeserializeObject(jsonString, T);
+            if (config == null) TweakConfigFile.BackupUnreadable(configFile, $"tweak「{Name}」的設定檔是空的或無法辨識，這次使用預設值");
+            return config;
         } catch (Exception ex) {
             SimpleLog.Error($"Failed to load config for tweak: {Name}");
             SimpleLog.Error(ex);
+            if (configFile != null && File.Exists(configFile)) TweakConfigFile.BackupUnreadable(configFile, $"tweak「{Name}」的設定檔讀不懂（{ex.GetType().Name}），這次使用預設值");
             return null;
         }
 #endif
@@ -214,7 +224,7 @@ public abstract class BaseTweak {
 #endif
             
             #if !TEST
-            File.WriteAllText(configFile, jsonString);
+            TweakConfigFile.Save(configFile, jsonString, this.Name);
             #endif  
         } catch (Exception ex) {
             SimpleLog.Error($"Failed to write config for tweak: {this.Name}");
@@ -240,7 +250,7 @@ public abstract class BaseTweak {
             }
 #endif
 #if !TEST
-            File.WriteAllText(configFile, jsonString);
+            TweakConfigFile.Save(configFile, jsonString, this.Name);
 #endif
         } catch (Exception ex) {
             SimpleLog.Error($"Failed to write config for tweak: {this.Name}");
