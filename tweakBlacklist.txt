@@ -7,3 +7,4 @@ UiAdjustments@LockWindowPosition
 UiAdjustments@SubmarineDestinationLetters
 CharaCardCommand
 DisableNoviceNetworkAutoSwitch
+RefreshMarketPrices::2
