@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Dalamud.Game.Addon.Lifecycle;
 using Dalamud.Game.Addon.Lifecycle.AddonArgTypes;
 using Dalamud.Plugin.Services;
@@ -321,7 +322,7 @@ public static unsafe class EventController {
 
     private static void HandleEvent(AddonEvent type, AddonArgs args) {
         if (!AddonEventSubscribers.TryGetValue(type, out var addonSubscriberDict)) return;
-        if (addonSubscriberDict.TryGetValue(args.AddonName, out var addonSubscriberList)) {
+        if (TryGetAddonSubscribers(addonSubscriberDict, args, out var addonSubscriberList)) {
             foreach (var subscriber in addonSubscriberList) {
                 if (subscriber.Tweak.IsDisposed) continue;
                 if (!subscriber.Tweak.Enabled) continue;
@@ -336,6 +337,29 @@ public static unsafe class EventController {
                 subscriber.Invoke(args);
             }
         }
+    }
+
+    // 與 TryGetValue(args.AddonName, …) 同結果，但不讀 AddonName：全域監聽每個 addon 每次事件都進來，
+    // 而 AddonName 第一次讀就建立字串（同一事件所有監聽者共用，誰先讀誰付）。
+    private static bool TryGetAddonSubscribers(Dictionary<string, List<EventSubscriber>> dict, AddonArgs args, out List<EventSubscriber> list) {
+        foreach (var (name, subscribers) in dict) {
+            if (!AddonNameEquals(args, name)) continue;
+            list = subscribers;
+            return true;
+        }
+
+        list = null;
+        return false;
+    }
+
+    // 契約：等同 args.AddonName == name（空指標或名稱首位元組為 0 時是 AddonArgs.InvalidAddon；名稱讀到第一個 NUL、上限 32 位元組）。
+    private static bool AddonNameEquals(AddonArgs args, string name) {
+        var addon = (AtkUnitBase*)args.Addon.Address;
+        if (addon == null || addon->Name[0] == 0) return name == AddonArgs.InvalidAddon;
+        ReadOnlySpan<byte> buffer = addon->Name;
+        var terminator = buffer.IndexOf((byte)0);
+        var bytes = terminator < 0 ? buffer : buffer[..terminator];
+        return Ascii.IsValid(bytes) ? Ascii.Equals(bytes, name) : name == Encoding.UTF8.GetString(bytes);
     }
 
     public static void UnregisterEvents(BaseTweak tweak) {
