@@ -3291,6 +3291,10 @@
     "message": "金碟巨豆中心離開確認視窗",
     "description": "UI text: Blunderville exit dialog"
   },
+  "Text / Zodiac Weapon Enhancement": {
+    "message": "強化黃道武器",
+    "description": "UI text: Zodiac Weapon Enhancement"
+  },
   "Text / Focus Target": {
     "message": "焦點目標",
     "description": "UI text: Focus Target"
