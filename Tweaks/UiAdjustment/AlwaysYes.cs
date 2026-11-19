@@ -143,7 +143,7 @@ public unsafe class AlwaysYes : UiAdjustments.SubTweak {
                 if (Config.RetainerVentures) SetFocusYes(args.Addon, 40);
                 return;
             case "RetainerItemTransferList":
-                if (Config.RetainerVentures) SetFocusYes(args.Addon, 7);
+                if (Config.RetainerEntrustDuplicates) SetFocusYes(args.Addon, 7);
                 return;
             case "RetainerTaskResult":
                 if (Config.RetainerVentures) SetFocusYes(args.Addon, 20);
