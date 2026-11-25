@@ -1,7 +1,11 @@
 name: Simple Tweaks Plugin
 author: Caraxi
 description: |-
-  A collection of Quality of Life tweaks. Aiming to improve the experience without changing anything drastically.
-  All changes are toggleable, with everything disabled by default. Visit the Repo for a full list of tweaks. (Globe icon below)
-punchline: This was supposed to be simple...
+  收錄聊天、指令、介面、提示、便利性等各類小調整，在不大幅改變遊戲的前提下讓日常操作更順手。每一項都能個別開關，預設全部關閉。
+  - 輸入 /tweaks 開啟設定視窗，逐項啟用與設定
+  - 例：修正「/target」指令、總是選「是」、HP 條顯示護盾、顯示食物與藥品的預期數值
+  - 內建台服用語的繁體中文介面
+  - 不上報使用統計
+  - 遊戲改版後有項目對不上時，只停用受影響的項目，其他照常運作
+punchline: 收錄各類可個別開關的小調整，讓日常操作更順手。
 repo_url: https://github.com/ffxiv-tc-port/SimpleTweaksPlugin
