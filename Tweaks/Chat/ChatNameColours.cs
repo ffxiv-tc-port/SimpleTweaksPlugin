@@ -116,7 +116,7 @@ public class ChatNameColours : ChatTweaks.SubTweak {
                     .Select(dc => new Region.DataCentre {
                         Name = dc.Name.ExtractText(), 
                         Worlds = Service.Data.Excel.GetSheet<World>().Where(w => 
-                            w.DataCenter.RowId == dc.RowId && w.IsPublic
+                            w.DataCenter.RowId == dc.RowId && TaiwanWorlds.IsPlayable(w)
                         ).Select(w => w.Name.ExtractText()).ToList()
                 }).Where(dc => dc.Worlds.Count > 0).ToList()
             };
@@ -125,7 +125,8 @@ public class ChatNameColours : ChatTweaks.SubTweak {
             GetRegion(1, "JP"),
             GetRegion(2, "NA"),
             GetRegion(3, "EU"),
-            GetRegion(4, "OCE")
+            GetRegion(4, "OCE"),
+            GetRegion(TaiwanWorlds.Region, "TW")
         ];
     }
 

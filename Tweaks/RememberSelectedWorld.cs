@@ -62,7 +62,7 @@ public unsafe class RememberSelectedWorld : Tweak {
         if (stringArray == null) return;
 
         var world = Service.Data.Excel.GetSheet<World>().GetRowOrDefault(worldId);
-        if (world is not { IsPublic: true }) return;
+        if (world is not { } w || !TaiwanWorlds.IsPlayable(w)) return;
 
         SimpleLog.Debug($"Attempting to Select World: {world.Value.Name.ExtractText()}");
 
